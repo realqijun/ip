@@ -3,6 +3,8 @@ import java.util.Scanner;
 
 public class BabyGronk {
     private final static String seperators =  "💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬\n";
+    private static String[] history = new String[100];
+    private static int h_index = 0;
 
     private static void logOff() {
         String goodByeMessage = seperators +
@@ -28,22 +30,30 @@ public class BabyGronk {
         return new Scanner(System.in).nextLine();
     }
 
-    private static String produceReply(String input) {
+    private static String handleInput(String input) {
         if (input == null || input.isEmpty()) {
-            return ("What bro?\n");
-        }
-        if (input.chars().allMatch(Character::isDigit)) {
-            int val = Integer.parseInt(input);
-            if (val < 1000) {
-                return ("That's too little! Don't talk to me until it's higher\n");
-            } else {
-                return ("Wow! Teach me how to be as sigma as you senpai\n");
-            }
+            return ("What bro? You're not skibidi enough\n");
         }
         if (input.equals("bye")) {
             logOff();
         }
-        return (input + "\n");
+        if (input.equals("list")) {
+            return (getHistory());
+        }
+        addHistory(input);
+        return ("added: " + input + "\n");
+    }
+
+    private static void    addHistory(String input) {
+        history[h_index++] = input;
+    }
+
+    private static String    getHistory() {
+        StringBuilder hist = new StringBuilder();
+        for (int i = 0; i < h_index; i++) {
+            hist.append(i + 1).append(".: ").append(history[i]).append("\n");
+        }
+        return hist.toString();
     }
 
     public static void main(String[] args) {
@@ -62,7 +72,7 @@ public class BabyGronk {
         System.out.println("Up your rizz\n" + logo);
         greet();
         while (true) {
-            String answer = produceReply(getPrompt());
+            String answer = handleInput(getPrompt());
             System.out.println(seperators + answer + seperators);
         }
     }
