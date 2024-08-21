@@ -26,9 +26,9 @@ public class BabyGronk {
         System.out.println(welcomeMessage);
     }
 
-    private static String   handleInput(String input) {
+    private static String   handleInput(String input) throws EmptyInputException {
         if (input == null || input.isEmpty()) {
-            return ("What bro? You're not skibidi enough\n");
+            throw new EmptyInputException ("What bro? You're not skibidi enough\n");
         }
         if (input.equals("bye")) {
             logOff();
@@ -152,8 +152,13 @@ public class BabyGronk {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             if (scanner.hasNextLine()) {
-                String answer = handleInput(scanner.nextLine());
-                System.out.println(SEPERATOR + answer + SEPERATOR);
+                try {
+                    String answer = handleInput(scanner.nextLine());
+                    System.out.println(SEPERATOR + answer + SEPERATOR);
+                } catch (EmptyInputException e) {
+                    System.out.println(e.getMessage());
+                    System.exit(0);
+                }
             } else {
                 scanner.close();
                 break;
