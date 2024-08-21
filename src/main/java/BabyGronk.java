@@ -3,8 +3,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BabyGronk {
-    private final static    String SEPERATOR =  "💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬\n";
-    private static  List<Task> tasks = new ArrayList<>();
+    private final static String SEPERATOR =  "💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬\n";
+    private static List<Task>  tasks = new ArrayList<>();
 
     private static void logOff() {
         String goodByeMessage = SEPERATOR +
@@ -24,10 +24,6 @@ public class BabyGronk {
                 """ +
                 SEPERATOR;
         System.out.println(welcomeMessage);
-    }
-
-    private static String   getPrompt() {
-        return new Scanner(System.in).nextLine();
     }
 
     private static String   handleInput(String input) {
@@ -64,6 +60,7 @@ public class BabyGronk {
             for (int i = 1; i < args.length; i++) {
                 task.append(args[i]).append(" ");
             }
+            task.deleteCharAt(task.length() - 1);
             tasks.add(new ToDo(task.toString()));
         } else if (args[0].startsWith("deadline")) {
             StringBuilder task = new StringBuilder();
@@ -90,8 +87,10 @@ public class BabyGronk {
             }
             StringBuilder from = new StringBuilder();
             for (i = i + 1; i < args.length; i++) {
-                if (args[i].equals("/to"))
+                if (args[i].equals("/to")) {
+                    from.deleteCharAt(from.length() - 1);
                     break;
+                }
                 from.append(args[i]).append(" ");
             }
             if (i == args.length || i + 1 == args.length) {
@@ -101,6 +100,7 @@ public class BabyGronk {
             for (i = i + 1; i < args.length; i++) {
                 to.append(args[i]).append(" ");
             }
+            to.deleteCharAt(to.length() - 1);
             tasks.add(new Event(task.toString(), from.toString(), to.toString()));
         } else {
             return ("invalid task type\n");
@@ -149,9 +149,15 @@ public class BabyGronk {
                 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀""";
         System.out.println("Up your rizz\n" + logo);
         greet();
+        Scanner scanner = new Scanner(System.in);
         while (true) {
-            String answer = handleInput(getPrompt());
-            System.out.println(SEPERATOR + answer + SEPERATOR);
+            if (scanner.hasNextLine()) {
+                String answer = handleInput(scanner.nextLine());
+                System.out.println(SEPERATOR + answer + SEPERATOR);
+            } else {
+                scanner.close();
+                break;
+            }
         }
     }
 }
