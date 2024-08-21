@@ -1,10 +1,10 @@
-import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class BabyGronk {
-    private final static String seperators =  "💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬\n";
-    private static String[] history = new String[100];
-    private static int h_index = 0;
+    private final static    String seperators =  "💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬\n";
+    private static  List<Task> tasks = new ArrayList<>();
 
     private static void logOff() {
         String goodByeMessage = seperators +
@@ -26,11 +26,11 @@ public class BabyGronk {
         System.out.println(welcomeMessage);
     }
 
-    private static String getPrompt() {
+    private static String   getPrompt() {
         return new Scanner(System.in).nextLine();
     }
 
-    private static String handleInput(String input) {
+    private static String   handleInput(String input) {
         if (input == null || input.isEmpty()) {
             return ("What bro? You're not skibidi enough\n");
         }
@@ -38,25 +38,53 @@ public class BabyGronk {
             logOff();
         }
         if (input.equals("list")) {
-            return (getHistory());
+            return (listTasks());
         }
-        addHistory(input);
+        if (input.startsWith("unmark") || input.startsWith("mark")) {
+            String[] args = input.split(" ");
+            if (args.length != 2) {
+                return ("invalid mark/unmark command\n");
+            }
+            if (input.startsWith("unmark")) {
+                return (markTask(args[1], false));
+            } else {
+                return (markTask(args[1], true));
+            }
+        }
+        addTask(input);
         return ("added: " + input + "\n");
     }
 
-    private static void    addHistory(String input) {
-        history[h_index++] = input;
+    private static void addTask(String input) {
+        tasks.add(new Task(input));
     }
 
-    private static String    getHistory() {
-        StringBuilder hist = new StringBuilder();
-        for (int i = 0; i < h_index; i++) {
-            hist.append(i + 1).append(".: ").append(history[i]).append("\n");
+    private static String   listTasks() {
+        StringBuilder hist = new StringBuilder("To do list:\n");
+        for (int i = 0; i < tasks.size(); i++) {
+            hist.append(i + 1).append(".").append(tasks.get(i).toString()).append("\n");
         }
         return hist.toString();
     }
 
-    public static void main(String[] args) {
+    private static String   markTask(String input, boolean status) {
+        if (input == null || input.isEmpty()) {
+            return ("invalid task\n");
+        }
+        int toMark = Integer.parseInt(input);
+        if (toMark > tasks.size() || toMark < 1) {
+            return ("invalid task\n");
+        }
+        Task task = tasks.get(toMark - 1);
+        task.setDone(status);
+        if (status) {
+            return ("Let's go! +100 aura points!\n" + task + "\n");
+        } else {
+            return ("Bruh, you're cooked, -500 aura points\n" + task + "\n");
+        }
+    }
+
+    public static void  main(String[] args) {
         String logo = """
                 ⣠⣀⣤⣶⣶⣶⣶⣤⣤⣤⣤⣄⡀⠀⠀⠀⢀⣀⣀⣤⣤⣤⣶⣶⣶⣶⣬⣒⢦⡀
                 ⡾⠛⠉⠉⢀⣀⣈⣉⣉⣉⣻⠛⠁⠀⠀⠀⠀⠙⢛⣛⣉⣉⣉⣉⣀⠀⠉⠙⠻⢮
