@@ -3,26 +3,26 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BabyGronk {
-    private final static    String seperators =  "💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬\n";
+    private final static    String SEPERATOR =  "💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬\n";
     private static  List<Task> tasks = new ArrayList<>();
 
     private static void logOff() {
-        String goodByeMessage = seperators +
+        String goodByeMessage = SEPERATOR +
                 """
                 Smell ya later.
                 """ +
-                seperators;
+                SEPERATOR;
         System.out.println(goodByeMessage);
         System.exit(0);
     }
 
     private static void greet() {
-        String welcomeMessage = seperators +
+        String welcomeMessage = SEPERATOR +
                 """ 
                 What's up ohio? I'm BabyGronk, let's see how sigma you are
                 How much aura do you have?
                 """ +
-                seperators;
+                SEPERATOR;
         System.out.println(welcomeMessage);
     }
 
@@ -51,12 +51,62 @@ public class BabyGronk {
                 return (markTask(args[1], true));
             }
         }
-        addTask(input);
-        return ("added: " + input + "\n");
+        return (addTask(input));
     }
 
-    private static void addTask(String input) {
-        tasks.add(new Task(input));
+    private static String addTask(String input) {
+        String[] args = input.split(" ");
+        if (args.length < 2) {
+            return ("invalid task format\n");
+        }
+        if (args[0].startsWith("todo")) {
+            StringBuilder task = new StringBuilder();
+            for (int i = 1; i < args.length; i++) {
+                task.append(args[i]).append(" ");
+            }
+            tasks.add(new ToDo(task.toString()));
+        } else if (args[0].startsWith("deadline")) {
+            StringBuilder task = new StringBuilder();
+            int i = 1;
+            for (; i < args.length; i++) {
+                if (args[i].equals("/by"))
+                    break;
+                task.append(args[i]).append(" ");
+            }
+            if (i == args.length || i + 1 == args.length) {
+                return ("no deadline!\n");
+            }
+            tasks.add(new Deadline(task.toString(), args[i + 1]));
+        } else if (args[0].equals("event")) {
+            StringBuilder task = new StringBuilder();
+            int i = 1;
+            for (; i < args.length; i++) {
+                if (args[i].equals("/from"))
+                    break;
+                task.append(args[i]).append(" ");
+            }
+            if (i == args.length || i + 1 == args.length) {
+                return ("no event start time!\n");
+            }
+            StringBuilder from = new StringBuilder();
+            for (i = i + 1; i < args.length; i++) {
+                if (args[i].equals("/to"))
+                    break;
+                from.append(args[i]).append(" ");
+            }
+            if (i == args.length || i + 1 == args.length) {
+                return ("no event end time!\n");
+            }
+            StringBuilder to = new StringBuilder();
+            for (i = i + 1; i < args.length; i++) {
+                to.append(args[i]).append(" ");
+            }
+            tasks.add(new Event(task.toString(), from.toString(), to.toString()));
+        } else {
+            return ("invalid task type\n");
+        }
+        return ("added task: " + tasks.get(tasks.size() - 1).toString() + "\n" +
+                tasks.size() + " task(s) in the list rn\n");
     }
 
     private static String   listTasks() {
@@ -101,7 +151,7 @@ public class BabyGronk {
         greet();
         while (true) {
             String answer = handleInput(getPrompt());
-            System.out.println(seperators + answer + seperators);
+            System.out.println(SEPERATOR + answer + SEPERATOR);
         }
     }
 }
