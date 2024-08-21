@@ -47,7 +47,23 @@ public class BabyGronk {
                 return (markTask(args[1], true));
             }
         }
+        if (input.startsWith("delete")) {
+            String[] args = input.split(" ");
+            if (args.length != 2) {
+                return ("invalid delete command\n");
+            }
+            return (deleteTask(args[1]));
+        }
         return (addTask(input));
+    }
+
+    private static String deleteTask(String input) {
+        int toDelete = Integer.parseInt(input);
+        if (toDelete < 1 || toDelete > tasks.size()) {
+            return ("are u acoustic?!! pick within the range 1 - " + tasks.size() + "\n");
+        }
+        Task deleted = tasks.remove(toDelete - 1);
+        return (deleted + "\n was sent to the shadow realm\n" + tasks.size() + " tasks remain\n");
     }
 
     private static String addTask(String input) {
