@@ -1,14 +1,18 @@
 
-To do list:
+To do list 📋☑️:
 
-added task: [T][ ] event
+added task: [T][ ] grind league of legends
 1 task(s) in the list rn
 
-no event start time!
+To do list 📋☑️:
+1.[T][ ] grind league of legends
 
-invalid task format
+Let's go! +100 aura points!
+[T][X] grind league of legends
 
-no event start time!
+[T][X] grind league of legends
+ has been ejected (they were the impostor)
+0 tasks remain
 
-Smell ya later.
+Going back to my skibidi toilet.
 

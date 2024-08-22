@@ -11,6 +11,10 @@ public class Task {
         this.done = done;
     }
 
+    public boolean  isDone() {
+        return (done);
+    }
+
     @Override
     public String toString() {
         String status = this.done ? "X" : " ";

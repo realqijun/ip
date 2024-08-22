@@ -3,32 +3,32 @@ import java.util.List;
 import java.util.Scanner;
 
 public class BabyGronk {
-    private final static String SEPERATOR =  "💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬\n";
+    private final static String SEPARATOR =  "💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬\n";
     private static List<Task>  tasks = new ArrayList<>();
 
     private static void logOff() {
-        String goodByeMessage = SEPERATOR +
+        String goodByeMessage = SEPARATOR +
                 """
-                Smell ya later.
+                Going back to my skibidi toilet.
                 """ +
-                SEPERATOR;
+                SEPARATOR;
         System.out.println(goodByeMessage);
         System.exit(0);
     }
 
     private static void greet() {
-        String welcomeMessage = SEPERATOR +
+        String welcomeMessage = SEPARATOR +
                 """ 
                 What's up ohio? I'm BabyGronk, let's see how sigma you are
-                How much aura do you have?
+                Gyatt Damn
                 """ +
-                SEPERATOR;
+                SEPARATOR;
         System.out.println(welcomeMessage);
     }
 
     private static String   handleInput(String input) throws EmptyInputException {
         if (input == null || input.isEmpty()) {
-            throw new EmptyInputException ("What bro? You're not skibidi enough\n");
+            throw new EmptyInputException ("What bro? You're too fanum taxed\n");
         }
         if (input.equals("bye")) {
             logOff();
@@ -39,7 +39,7 @@ public class BabyGronk {
         if (input.startsWith("unmark") || input.startsWith("mark")) {
             String[] args = input.split(" ");
             if (args.length != 2) {
-                return ("invalid mark/unmark command\n");
+                return ("Usage: [mark/unmark] [index]\n");
             }
             if (input.startsWith("unmark")) {
                 return (markTask(args[1], false));
@@ -50,7 +50,7 @@ public class BabyGronk {
         if (input.startsWith("delete")) {
             String[] args = input.split(" ");
             if (args.length != 2) {
-                return ("invalid delete command\n");
+                return ("How can you not delete properly? (delete [index])\n");
             }
             return (deleteTask(args[1]));
         }
@@ -60,16 +60,20 @@ public class BabyGronk {
     private static String deleteTask(String input) {
         int toDelete = Integer.parseInt(input);
         if (toDelete < 1 || toDelete > tasks.size()) {
-            return ("are u acoustic?!! pick within the range 1 - " + tasks.size() + "\n");
+            if (tasks.isEmpty()) {
+                return ("Ohio level brainrot detected, you haven't even added anything to the list\n");
+            } else {
+                return ("Please pick within the range 1 - " + tasks.size() + "\n");
+            }
         }
         Task deleted = tasks.remove(toDelete - 1);
-        return (deleted + "\n was sent to the shadow realm\n" + tasks.size() + " tasks remain\n");
+        return (deleted + "\n has been ejected (they were the impostor)\n" + tasks.size() + " tasks remain\n");
     }
 
     private static String addTask(String input) {
         String[] args = input.split(" ");
         if (args.length < 2) {
-            return ("invalid task format\n");
+            return ("No grimace shake for you ([task_type] [task_name] [args])\n");
         }
         if (args[0].startsWith("todo")) {
             StringBuilder task = new StringBuilder();
@@ -119,14 +123,14 @@ public class BabyGronk {
             to.deleteCharAt(to.length() - 1);
             tasks.add(new Event(task.toString(), from.toString(), to.toString()));
         } else {
-            return ("invalid task type\n");
+            return ("invalid task type (only todo, deadline, event allowed)\n");
         }
         return ("added task: " + tasks.get(tasks.size() - 1).toString() + "\n" +
                 tasks.size() + " task(s) in the list rn\n");
     }
 
     private static String   listTasks() {
-        StringBuilder hist = new StringBuilder("To do list:\n");
+        StringBuilder hist = new StringBuilder("To do list 📋☑️:\n");
         for (int i = 0; i < tasks.size(); i++) {
             hist.append(i + 1).append(".").append(tasks.get(i).toString()).append("\n");
         }
@@ -135,13 +139,16 @@ public class BabyGronk {
 
     private static String   markTask(String input, boolean status) {
         if (input == null || input.isEmpty()) {
-            return ("invalid task\n");
+            return ("Are you acoustic? Give me a number! (mark [index])\n");
         }
         int toMark = Integer.parseInt(input);
         if (toMark > tasks.size() || toMark < 1) {
-            return ("invalid task\n");
+            return ("You got no rizz, try learning how to count (index out of range)\n");
         }
         Task task = tasks.get(toMark - 1);
+        if (status == task.isDone()) {
+            return ("Task is already " + (status ? "marked" : "unmarked") + "\n");
+        }
         task.setDone(status);
         if (status) {
             return ("Let's go! +100 aura points!\n" + task + "\n");
@@ -170,7 +177,7 @@ public class BabyGronk {
             if (scanner.hasNextLine()) {
                 try {
                     String answer = handleInput(scanner.nextLine());
-                    System.out.println(SEPERATOR + answer + SEPERATOR);
+                    System.out.println(SEPARATOR + answer + SEPARATOR);
                 } catch (EmptyInputException e) {
                     System.out.println(e.getMessage());
                     System.exit(0);
