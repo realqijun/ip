@@ -1,8 +1,11 @@
+import java.io.*;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class BabyGronk {
+class BabyGronk {
+    private static final String  DATA = "./data/BabyGronk.txt";
     private final static String SEPARATOR =  "💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬\n";
     private static List<Task>  tasks = new ArrayList<>();
 
@@ -93,7 +96,12 @@ public class BabyGronk {
             if (i == args.length || i + 1 == args.length) {
                 return ("no deadline!\n");
             }
-            tasks.add(new Deadline(task.toString(), args[i + 1]));
+            StringBuilder deadline = new StringBuilder();
+            for (int j = i + 1; j < args.length; j++) {
+                deadline.append(args[j]).append(" ");
+            }
+            deadline.deleteCharAt(deadline.length() - 1);
+            tasks.add(new Deadline(task.toString(), deadline.toString()));
         } else if (args[0].equals("event")) {
             StringBuilder task = new StringBuilder();
             int i = 1;
@@ -157,6 +165,58 @@ public class BabyGronk {
         }
     }
 
+    private static void  initDataFile() {
+        File file = new File(DATA);
+        if (!file.exists()) {
+            boolean directoryCreated = file.getParentFile().mkdirs();
+            if (!directoryCreated) {
+                System.out.println("Directory was not created");
+            }
+            boolean fileCreated = false;
+            try {
+                fileCreated = file.createNewFile();
+            } catch (IOException e) {
+                System.out.println("Error creating file");
+                System.exit(1);
+            }
+            if (!fileCreated) {
+                System.out.println("File was not created");
+            }
+        }
+        FileReader fileReader = null;
+        try {
+            fileReader = new FileReader(DATA);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+            System.exit(1);
+        }
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        bufferedReader.lines().forEach(BabyGronk::initTasks);
+    }
+
+    private static void initTasks(String input) {
+        String[] args = input.split("] ", 2);
+        if (args[0].charAt(1) == 'T') {
+            tasks.add(new ToDo(args[1]));
+            if (args[0].charAt(4) == 'X') {
+                tasks.get(tasks.size() - 1).setDone(true);
+            }
+        } else if (args[0].charAt(1) == 'D') {
+            String[] args2 = args[1].split(" \\(");
+            tasks.add(new Deadline(args2[0], args2[1].substring(4, args2[1].length() - 1)));
+            if (args[0].charAt(4) == 'X') {
+                tasks.get(tasks.size() - 1).setDone(true);
+            }
+        } else if (args[0].charAt(1) == 'E') {
+            String[] args2 = args[1].split(" \\(");
+            String[] args3 = args2[1].split(" to: ");
+            tasks.add(new Event(args2[0], args3[0].substring(6), args3[1].substring(0, args3[1].length() - 1)));
+            if (args[0].charAt(4) == 'X') {
+                tasks.get(tasks.size() - 1).setDone(true);
+            }
+        }
+    }
+
     public static void  main(String[] args) {
         String logo = """
                 ⣠⣀⣤⣶⣶⣶⣶⣤⣤⣤⣤⣄⡀⠀⠀⠀⢀⣀⣀⣤⣤⣤⣶⣶⣶⣶⣬⣒⢦⡀
@@ -172,6 +232,7 @@ public class BabyGronk {
                 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀""";
         System.out.println("Up your rizz\n" + logo);
         greet();
+        initDataFile();
         Scanner scanner = new Scanner(System.in);
         while (true) {
             if (scanner.hasNextLine()) {
