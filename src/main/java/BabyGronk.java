@@ -1,5 +1,10 @@
-import java.io.*;
-import java.nio.file.Path;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -16,6 +21,7 @@ class BabyGronk {
                 """ +
                 SEPARATOR;
         System.out.println(goodByeMessage);
+        saveData();
         System.exit(0);
     }
 
@@ -195,7 +201,7 @@ class BabyGronk {
     }
 
     private static void initTasks(String input) {
-        String[] args = input.split("] ", 2);
+        String[] args = input.split("] ");
         if (args[0].charAt(1) == 'T') {
             tasks.add(new ToDo(args[1]));
             if (args[0].charAt(4) == 'X') {
@@ -214,6 +220,22 @@ class BabyGronk {
             if (args[0].charAt(4) == 'X') {
                 tasks.get(tasks.size() - 1).setDone(true);
             }
+        } else {
+            System.out.println("Line: " + input + " has invalid format type, data cannot be loaded");
+        }
+    }
+
+    private static void saveData() {
+        BufferedWriter bufferedWriter = null;
+        try {
+            bufferedWriter = new BufferedWriter(new FileWriter(DATA));
+            for (Task t: tasks) {
+                bufferedWriter.write(t.toString());
+                bufferedWriter.newLine();
+                bufferedWriter.flush();
+            }
+        } catch (IOException e) {
+            System.out.println("Error writing to file");
         }
     }
 
