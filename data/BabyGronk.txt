@@ -1,5 +1,5 @@
 [T][ ] play league of legends
-[D][ ] cs2105 assignment0  (by: 5 sep)
-[E][ ] mooncake event  (from: 2 sept 6:30pm to: 2 sept 8:30pm)
+[D][ ] cs2105 assignment0  (by: 28/08/2024 1830)
+[E][ ] mooncake event  (from: 02/09/2024 1830 to: 02/09/2024 2030)
 [T][ ] go home
-[D][ ] apply sep  (by: 10 sept)
+[D][ ] apply sep  (by: 28/09/2024 0000)

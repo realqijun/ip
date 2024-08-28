@@ -1,4 +1,4 @@
-public class Task {
+public abstract class Task {
     private String task;
     private boolean done;
 
@@ -6,6 +6,8 @@ public class Task {
         this.task = task;
         this.done = false;
     }
+
+    public abstract String display();
 
     public void setDone(boolean done) {
         this.done = done;

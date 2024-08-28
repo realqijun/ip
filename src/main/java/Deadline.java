@@ -1,14 +1,19 @@
 public class Deadline extends Task {
     private final static String TASK_NAME = "[D]";
-    private String deadline;
+    private CustomDate deadlineDate;
 
     Deadline(String task, String deadline) {
         super(task);
-        this.deadline = deadline;
+        this.deadlineDate = new CustomDate(deadline);
     }
 
     @Override
-    public String toString() {
-        return (TASK_NAME + super.toString() + " (by: " + deadline + ")");
+    public String   display() {
+        return (TASK_NAME + super.toString() + " (by: " + deadlineDate + ")");
+    }
+
+    @Override
+    public String   toString() {
+        return (TASK_NAME + super.toString() + " (by: " + deadlineDate.unparseDate() + ")");
     }
 }
