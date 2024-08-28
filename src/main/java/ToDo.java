@@ -6,6 +6,10 @@ public class ToDo extends Task {
     }
 
     @Override
+    public String   display() {
+        return (TASK_NAME + super.toString());
+    }
+    @Override
     public String toString() {
         return (TASK_NAME + super.toString());
     }

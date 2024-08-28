@@ -1,16 +1,22 @@
 public class Event extends Task {
     private final static String TASK_NAME = "[E]";
-    private String from;
-    private String to;
+    private CustomDate from;
+    private CustomDate to;
 
     Event(String task, String from, String to) {
         super(task);
-        this.from = from;
-        this.to = to;
+        this.from = new CustomDate(from);
+        this.to = new CustomDate(to);
+    }
+
+    @Override
+    public String   display() {
+        return (TASK_NAME + super.toString() + " (from: " + from + " to: " + to + ")");
     }
 
     @Override
     public String toString() {
-        return (TASK_NAME + super.toString() + " (from: " + from + " to: " + to + ")");
+        return (TASK_NAME + super.toString() +
+                " (from: " + from.unparseDate() + " to: " + to.unparseDate() + ")");
     }
 }

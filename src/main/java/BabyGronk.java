@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-class BabyGronk {
+public class BabyGronk {
     private static final String  DATA = "./data/BabyGronk.txt";
     private final static String SEPARATOR =  "💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬\n";
     private static List<Task>  tasks = new ArrayList<>();
@@ -80,62 +80,28 @@ class BabyGronk {
     }
 
     private static String addTask(String input) {
-        String[] args = input.split(" ");
+        String[] args = input.split(" ", 2);
         if (args.length < 2) {
             return ("No grimace shake for you ([task_type] [task_name] [args])\n");
         }
         if (args[0].startsWith("todo")) {
-            StringBuilder task = new StringBuilder();
-            for (int i = 1; i < args.length; i++) {
-                task.append(args[i]).append(" ");
-            }
-            task.deleteCharAt(task.length() - 1);
-            tasks.add(new ToDo(task.toString()));
+            tasks.add(new ToDo(args[1]));
         } else if (args[0].startsWith("deadline")) {
-            StringBuilder task = new StringBuilder();
-            int i = 1;
-            for (; i < args.length; i++) {
-                if (args[i].equals("/by"))
-                    break;
-                task.append(args[i]).append(" ");
-            }
-            if (i == args.length || i + 1 == args.length) {
+            String[] deadlineArgs = args[1].split(" /by ",2);
+            if (deadlineArgs.length < 2) {
                 return ("no deadline!\n");
             }
-            StringBuilder deadline = new StringBuilder();
-            for (int j = i + 1; j < args.length; j++) {
-                deadline.append(args[j]).append(" ");
-            }
-            deadline.deleteCharAt(deadline.length() - 1);
-            tasks.add(new Deadline(task.toString(), deadline.toString()));
+            tasks.add(new Deadline(deadlineArgs[0], deadlineArgs[1]));
         } else if (args[0].equals("event")) {
-            StringBuilder task = new StringBuilder();
-            int i = 1;
-            for (; i < args.length; i++) {
-                if (args[i].equals("/from"))
-                    break;
-                task.append(args[i]).append(" ");
+            String[] eventFromArgs = args[1].split(" /from ",2);
+            if (eventFromArgs.length < 2) {
+                return ("no event from!\n");
             }
-            if (i == args.length || i + 1 == args.length) {
-                return ("no event start time!\n");
+            String[] eventToArgs = eventFromArgs[1].split(" /to ",2);
+            if (eventToArgs.length < 2) {
+                return ("no event to to!\n");
             }
-            StringBuilder from = new StringBuilder();
-            for (i = i + 1; i < args.length; i++) {
-                if (args[i].equals("/to")) {
-                    from.deleteCharAt(from.length() - 1);
-                    break;
-                }
-                from.append(args[i]).append(" ");
-            }
-            if (i == args.length || i + 1 == args.length) {
-                return ("no event end time!\n");
-            }
-            StringBuilder to = new StringBuilder();
-            for (i = i + 1; i < args.length; i++) {
-                to.append(args[i]).append(" ");
-            }
-            to.deleteCharAt(to.length() - 1);
-            tasks.add(new Event(task.toString(), from.toString(), to.toString()));
+            tasks.add(new Event(eventFromArgs[0], eventToArgs[0], eventToArgs[1]));
         } else {
             return ("invalid task type (only todo, deadline, event allowed)\n");
         }
@@ -146,7 +112,7 @@ class BabyGronk {
     private static String   listTasks() {
         StringBuilder hist = new StringBuilder("To do list 📋☑️:\n");
         for (int i = 0; i < tasks.size(); i++) {
-            hist.append(i + 1).append(".").append(tasks.get(i).toString()).append("\n");
+            hist.append(i + 1).append(".").append(tasks.get(i).display()).append("\n");
         }
         return hist.toString();
     }
