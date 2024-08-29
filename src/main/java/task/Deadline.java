@@ -1,10 +1,12 @@
-package BabyGronk;
+package task;
+
+import BabyGronk.CustomDate;
 
 public class Deadline extends Task {
     private final static String TASK_NAME = "[D]";
     private CustomDate deadlineDate;
 
-    Deadline(String task, String deadline) {
+    public Deadline(String task, String deadline) {
         super(task);
         this.deadlineDate = new CustomDate(deadline);
     }

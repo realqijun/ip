@@ -1,5 +1,15 @@
 package BabyGronk;
 
+import parser.EmptyInputException;
+import parser.Instruction;
+import parser.InvalidInputException;
+import parser.Parser;
+import task.Deadline;
+import task.Event;
+import task.Task;
+import task.TaskList;
+import task.ToDo;
+
 import java.util.Scanner;
 
 public class BabyGronk {
@@ -98,8 +108,7 @@ public class BabyGronk {
                     String input = Parser.parseInput(scanner.nextLine());
                     ui.printMessage(handleInput(input));
                 } catch (EmptyInputException e) {
-                    System.out.println(e.getMessage());
-                    System.exit(0);
+                    System.out.println(SEPARATOR + e.getMessage() + SEPARATOR);
                 }
             } else {
                 scanner.close();

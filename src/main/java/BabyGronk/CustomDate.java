@@ -10,7 +10,7 @@ public class CustomDate {
     private LocalDate localDate;
     private LocalTime localTime;
 
-    CustomDate(String date) {
+    public CustomDate(String date) {
         try {
             parseDate(date);
         } catch (DateTimeParseException e) {

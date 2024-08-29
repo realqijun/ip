@@ -1,11 +1,13 @@
-package BabyGronk;
+package task;
+
+import BabyGronk.CustomDate;
 
 public class Event extends Task {
     private final static String TASK_NAME = "[E]";
     private CustomDate from;
     private CustomDate to;
 
-    Event(String task, String from, String to) {
+    public Event(String task, String from, String to) {
         super(task);
         this.from = new CustomDate(from);
         this.to = new CustomDate(to);
