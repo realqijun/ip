@@ -1,3 +1,5 @@
+package BabyGronk;
+
 import java.util.Scanner;
 
 public class BabyGronk {
