@@ -1,9 +1,9 @@
-package BabyGronk;
+package task;
 
 public class ToDo extends Task {
     private final static String TASK_NAME = "[T]";
 
-    ToDo(String task) {
+    public ToDo(String task) {
         super(task);
     }
 

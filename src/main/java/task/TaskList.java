@@ -1,4 +1,6 @@
-package BabyGronk;
+package task;
+
+import BabyGronk.BabyGronk;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.stream.Stream;
 public class TaskList {
     private List<Task> tasks;
 
-    TaskList(Stream<String> tasks) {
+    public TaskList(Stream<String> tasks) {
         this.tasks = new ArrayList<>(100);
         tasks.forEach((task) -> {this.tasks.add(BabyGronk.initTasks(task));});
     }
