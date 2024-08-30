@@ -3,7 +3,7 @@ package task;
 import babygronk.CustomDate;
 
 public class Event extends Task {
-    private final static String TASK_NAME = "[E]";
+    private final static String TASK_TYPE = "[E]";
     private CustomDate from;
     private CustomDate to;
 
@@ -15,12 +15,12 @@ public class Event extends Task {
 
     @Override
     public String   display() {
-        return (TASK_NAME + super.toString() + " (from: " + from + " to: " + to + ")");
+        return (TASK_TYPE + super.toString() + " (from: " + from + " to: " + to + ")");
     }
 
     @Override
     public String toString() {
-        return (TASK_NAME + super.toString() +
+        return (TASK_TYPE + super.toString() +
                 " (from: " + from.unparseDate() + " to: " + to.unparseDate() + ")");
     }
 }

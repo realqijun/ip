@@ -9,7 +9,7 @@ public class StorageTest {
 
     @Test
     public void testInvalidFiles() {
-        assertNull(new Storage("/////").load());
-        assertNull(new Storage("/Users/new").load());
+        assertNull(new Storage("/////").init());
+        assertNull(new Storage("/Users/new").init());
     }
 }

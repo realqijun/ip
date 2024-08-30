@@ -13,7 +13,7 @@ public class Storage {
         fileName = file;
     }
 
-    private boolean createFile() {
+    private boolean fileCreated() {
         File dataFile = new File(fileName);
         if (!dataFile.exists()) {
             boolean directoryCreated = dataFile.getParentFile().mkdirs();
@@ -21,14 +21,14 @@ public class Storage {
                 System.out.println("Directory was not created");
                 return (false);
             }
-            boolean fileCreated = false;
+            boolean isCreated = false;
             try {
-                fileCreated = dataFile.createNewFile();
+                isCreated = dataFile.createNewFile();
             } catch (IOException e) {
                 System.out.println("Error creating file");
                 System.exit(1);
             }
-            if (!fileCreated) {
+            if (!isCreated) {
                 System.out.println("File was not created");
                 return (false);
             }
@@ -36,8 +36,8 @@ public class Storage {
         return (true);
     }
 
-    public Stream<String> load() {
-        if (createFile()) {
+    public Stream<String> init() {
+        if (fileCreated()) {
             FileReader fileReader;
             try {
                 fileReader = new FileReader(fileName);
@@ -52,7 +52,7 @@ public class Storage {
     }
 
     public void saveData(List<Task> tasks) {
-        if (createFile()) {
+        if (fileCreated()) {
             BufferedWriter bufferedWriter;
             try {
                 bufferedWriter = new BufferedWriter(new FileWriter(fileName));

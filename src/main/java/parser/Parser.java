@@ -7,11 +7,18 @@ public class Parser {
     public Parser() {
     }
 
+    /**
+     * Formats the input by splitting it and then joining it with single space.
+     *
+     * @param input String from input.
+     * @return Single string with single space between words.
+     * @throws EmptyInputException If the string is null or empty.
+     */
     public static String   parseInput(String input) throws EmptyInputException {
         if (input == null || input.isEmpty()) {
             throw new EmptyInputException ("What bro? You're too fanum taxed\n");
         }
-        return (String.join(" ", input.strip().split(" ")));
+        return (String.join(" ", input.strip().split("\\s+")));
     }
 
     public Instruction parseInstruction(String input) throws InvalidInputException {
@@ -40,28 +47,28 @@ public class Parser {
             }
             switch (args[0]) {
             case "todo":
-                String[] t_temp = input.split(" ", 2);
-                return (new Instruction(t_temp[0], t_temp));
+                String[] todoTemp = input.split(" ", 2);
+                return (new Instruction(todoTemp[0], todoTemp));
             case "deadline":
-                String[] d_temp = input.split(" ", 2);
-                String[] deadlineArgs = d_temp[1].split(" /by ");
+                String[] deadlineTemp = input.split(" ", 2);
+                String[] deadlineArgs = deadlineTemp[1].split(" /by ");
                 if (deadlineArgs.length != 2) {
                     throw new InvalidInputException("no deadline!\n");
                 }
-                String[] d_ret = Arrays.copyOfRange(deadlineArgs, 2, deadlineArgs.length);
-                d_ret[0] = d_temp[0];
-                System.arraycopy(deadlineArgs, 0, d_ret, 1, deadlineArgs.length);
-                return (new Instruction(d_temp[0], d_ret));
+                String[] deadlineRet = Arrays.copyOfRange(deadlineArgs, 2, deadlineArgs.length);
+                deadlineRet[0] = deadlineTemp[0];
+                System.arraycopy(deadlineArgs, 0, deadlineRet, 1, deadlineArgs.length);
+                return (new Instruction(deadlineTemp[0], deadlineRet));
             case "event":
-                String[] e_temp = input.split(" ", 2);
-                String[] eventFromArgs = e_temp[1].split(" /from | /to ");
-                if (eventFromArgs.length != 3) {
+                String[] eventTemp = input.split(" ", 2);
+                String[] eventArgs = eventTemp[1].split(" /from | /to ");
+                if (eventArgs.length != 3) {
                     throw new InvalidInputException("event start/end time is not determined\n");
                 }
-                String[] e_ret = Arrays.copyOf(eventFromArgs, eventFromArgs.length + 1);
-                e_ret[0] = e_temp[0];
-                System.arraycopy(eventFromArgs, 0, e_ret, 1, eventFromArgs.length);
-                return (new Instruction(e_temp[0], e_ret));
+                String[] eventReturn = Arrays.copyOf(eventArgs, eventArgs.length + 1);
+                eventReturn[0] = eventTemp[0];
+                System.arraycopy(eventArgs, 0, eventReturn, 1, eventArgs.length);
+                return (new Instruction(eventTemp[0], eventReturn));
             }
         }
         throw new InvalidInputException("invalid task type (only todo, deadline, event allowed)\n");

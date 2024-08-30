@@ -1,27 +1,27 @@
 package task;
 
 public abstract class Task {
-    private String task;
-    private boolean done;
+    private String taskName;
+    private boolean isDone;
 
     public Task(String task) {
-        this.task = task;
-        this.done = false;
+        taskName = task;
+        isDone = false;
     }
 
     public abstract String display();
 
     public void setDone(boolean done) {
-        this.done = done;
+        isDone = done;
     }
 
     public boolean  isDone() {
-        return (done);
+        return (isDone);
     }
 
     @Override
     public String toString() {
-        String status = this.done ? "X" : " ";
-        return ("[" + status + "] " + this.task);
+        String status = isDone ? "X" : " ";
+        return ("[" + status + "] " + taskName);
     }
 }
