@@ -40,7 +40,8 @@ public class Parser {
             }
             switch (args[0]) {
             case "todo":
-                return (new Instruction(args[0], args));
+                String[] t_temp = input.split(" ", 2);
+                return (new Instruction(t_temp[0], t_temp));
             case "deadline":
                 String[] d_temp = input.split(" ", 2);
                 String[] deadlineArgs = d_temp[1].split(" /by ");
@@ -50,7 +51,7 @@ public class Parser {
                 String[] d_ret = Arrays.copyOfRange(deadlineArgs, 2, deadlineArgs.length);
                 d_ret[0] = d_temp[0];
                 System.arraycopy(deadlineArgs, 0, d_ret, 1, deadlineArgs.length);
-                return (new Instruction(args[0], d_ret));
+                return (new Instruction(d_temp[0], d_ret));
             case "event":
                 String[] e_temp = input.split(" ", 2);
                 String[] eventFromArgs = e_temp[1].split(" /from | /to ");
@@ -60,7 +61,7 @@ public class Parser {
                 String[] e_ret = Arrays.copyOf(eventFromArgs, eventFromArgs.length + 1);
                 e_ret[0] = e_temp[0];
                 System.arraycopy(eventFromArgs, 0, e_ret, 1, eventFromArgs.length);
-                return (new Instruction(args[0], e_ret));
+                return (new Instruction(e_temp[0], e_ret));
             }
         }
         throw new InvalidInputException("invalid task type (only todo, deadline, event allowed)\n");
