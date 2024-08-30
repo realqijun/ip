@@ -6,6 +6,9 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Stores dates as LocalDate and time as LocalTime.
+ */
 public class CustomDate {
     private LocalDate localDate;
     private LocalTime localTime;
@@ -40,6 +43,11 @@ public class CustomDate {
         throw new DateTimeParseException("Invalid date format", date, 0);
     }
 
+    /**
+     * Formats the date and time to be stored into the data file so that it can be read easily next time.
+     *
+     * @return Date string with format dd/MM/yyyy HHmm.
+     */
     public String unparseDate() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
         return (localDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + " " + localTime.format(formatter));

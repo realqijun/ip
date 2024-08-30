@@ -12,11 +12,17 @@ import task.ToDo;
 
 import java.util.Scanner;
 
+/**
+ * BabyGronk is the main class where all the program logic is handled.
+ */
 public class BabyGronk {
-    private final static String SEPARATOR =  "💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬\n";
+    /** Stores info and handles data of the file containing the task list **/
     private Storage storage;
-    private TaskList taskList;
+
+    /** Prints formatted message **/
     private Ui ui;
+
+    private TaskList taskList;
 
     BabyGronk(String fileName) {
         ui = new Ui();
@@ -98,6 +104,10 @@ public class BabyGronk {
         }
     }
 
+    /**
+     * Starts by displaying welcome message.
+     * Runs the program on a loop waiting for user input using scanner and handling it.
+     */
     public void run() {
         ui.mascot();
         ui.greet();
@@ -108,7 +118,7 @@ public class BabyGronk {
                     String input = Parser.parseInput(scanner.nextLine());
                     ui.printMessage(handleInput(input));
                 } catch (EmptyInputException e) {
-                    System.out.println(SEPARATOR + e.getMessage() + SEPARATOR);
+                    ui.printMessage(e.getMessage());
                 }
             } else {
                 scanner.close();

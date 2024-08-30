@@ -1,5 +1,8 @@
 package task;
 
+/**
+ * Task child class identical to task.
+ */
 public class ToDo extends Task {
     private final static String TASK_NAME = "[T]";
 

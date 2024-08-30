@@ -1,5 +1,8 @@
 package task;
 
+/**
+ * Contains the name of the task and the status of the task (done/not done).
+ */
 public abstract class Task {
     private String task;
     private boolean done;

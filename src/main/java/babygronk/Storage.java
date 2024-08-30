@@ -2,10 +2,19 @@ package babygronk;
 
 import task.Task;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.List;
 import java.util.stream.Stream;
 
+/**
+ * Creates file and reads and stores data in it.
+ */
 public class Storage {
     private final String fileName;
 
@@ -36,6 +45,12 @@ public class Storage {
         return (true);
     }
 
+    /**
+     * Creates the file if it doesn't exist.
+     * Reads from the file if it exists.
+     *
+     * @return Stream of Strings for each line in the file or null if empty
+     */
     public Stream<String> load() {
         if (createFile()) {
             FileReader fileReader;

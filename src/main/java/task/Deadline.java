@@ -2,6 +2,9 @@ package task;
 
 import babygronk.CustomDate;
 
+/**
+ * Task child class with deadline delimited by /by
+ */
 public class Deadline extends Task {
     private final static String TASK_NAME = "[D]";
     private CustomDate deadlineDate;

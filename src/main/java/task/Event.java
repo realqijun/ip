@@ -2,6 +2,9 @@ package task;
 
 import babygronk.CustomDate;
 
+/**
+ * Task child class with event start time and event end time.
+ */
 public class Event extends Task {
     private final static String TASK_NAME = "[E]";
     private CustomDate from;
