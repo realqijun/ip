@@ -1,11 +1,17 @@
 package babygronk;
 
+/**
+ * Contains functions that prints customized messages.
+ */
 public class Ui {
     private final static String SEPARATOR =  "💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬\n";
 
     Ui() {
     }
 
+    /**
+     * Prints goodbye message and exits with status 0.
+     */
     public void logOff() {
         String goodByeMessage = SEPARATOR +
                 """

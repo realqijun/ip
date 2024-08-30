@@ -2,6 +2,9 @@ package parser;
 
 import java.util.Arrays;
 
+/**
+ * Parses input from user given by run method in BabyGronk class.
+ */
 public class Parser {
 
     public Parser() {
@@ -14,6 +17,13 @@ public class Parser {
         return (String.join(" ", input.strip().split(" ")));
     }
 
+    /**
+     * Parses input into formatted instructions.
+     *
+     * @param input Input given from user.
+     * @return Instruction object with parsed input.
+     * @throws InvalidInputException When input is not valid/defined in project page.
+     */
     public Instruction parseInstruction(String input) throws InvalidInputException {
         String[] args = input.split(" ");
         if (input.startsWith("bye")) {

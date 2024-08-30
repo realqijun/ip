@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+/**
+ * Stores a list of tasks in an ArrayList data structure.
+ */
 public class TaskList {
     private List<Task> tasks;
 
