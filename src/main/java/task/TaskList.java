@@ -52,6 +52,7 @@ public class TaskList {
             if (toMark > tasks.size() || toMark < 1) {
                 return ("You got no rizz, try learning how to count (index " + toMark + " out of range)\n");
             }
+
             Task task = tasks.get(toMark - 1);
             if (status == task.isDone()) {
                 return ("Task " + toMark + " is already " + (status ? "marked" : "unmarked") + "\n");

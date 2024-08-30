@@ -27,7 +27,7 @@ public class BabyGronk {
     BabyGronk(String fileName) {
         ui = new Ui();
         storage = new Storage(fileName);
-        taskList = new TaskList(storage.load());
+        taskList = new TaskList(storage.init());
     }
 
     private String   handleInput(String input) {
