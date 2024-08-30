@@ -1,4 +1,4 @@
-package BabyGronk;
+package babygronk;
 
 public class Ui {
     private final static String SEPARATOR =  "💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬\n";

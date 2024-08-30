@@ -1,4 +1,4 @@
-package BabyGronk;
+package babygronk;
 
 import parser.EmptyInputException;
 import parser.Instruction;

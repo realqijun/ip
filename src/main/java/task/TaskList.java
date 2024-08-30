@@ -1,6 +1,6 @@
 package task;
 
-import BabyGronk.BabyGronk;
+import babygronk.BabyGronk;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,11 @@ public class TaskList {
 
     public TaskList(Stream<String> tasks) {
         this.tasks = new ArrayList<>(100);
-        tasks.forEach((task) -> {this.tasks.add(BabyGronk.initTasks(task));});
+        if (tasks != null) {
+            tasks.forEach((task) -> {
+                this.tasks.add(BabyGronk.initTasks(task));
+            });
+        }
     }
 
     public String delete(String[] input) {

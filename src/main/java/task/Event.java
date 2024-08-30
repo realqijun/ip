@@ -1,6 +1,6 @@
 package task;
 
-import BabyGronk.CustomDate;
+import babygronk.CustomDate;
 
 public class Event extends Task {
     private final static String TASK_NAME = "[E]";

@@ -1,4 +1,4 @@
-package BabyGronk;
+package babygronk;
 
 import task.Task;
 
@@ -8,13 +8,12 @@ import java.util.stream.Stream;
 
 public class Storage {
     private final String fileName;
-    private File dataFile;
 
-    Storage(String file) {
+    public Storage(String file) {
         fileName = file;
     }
 
-    private boolean fileCreator() {
+    private boolean createFile() {
         File dataFile = new File(fileName);
         if (!dataFile.exists()) {
             boolean directoryCreated = dataFile.getParentFile().mkdirs();
@@ -38,30 +37,33 @@ public class Storage {
     }
 
     public Stream<String> load() {
-        fileCreator();
-        FileReader fileReader = null;
-        try {
-            fileReader = new FileReader(fileName);
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-            System.exit(1);
+        if (createFile()) {
+            FileReader fileReader;
+            try {
+                fileReader = new FileReader(fileName);
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found");
+                return (null);
+            }
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            return (bufferedReader.lines());
         }
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        return (bufferedReader.lines());
+        return (null);
     }
 
     public void saveData(List<Task> tasks) {
-        fileCreator();
-        BufferedWriter bufferedWriter;
-        try {
-            bufferedWriter = new BufferedWriter(new FileWriter(fileName));
-            for (Task t: tasks) {
-                bufferedWriter.write(t.toString());
-                bufferedWriter.newLine();
-                bufferedWriter.flush();
+        if (createFile()) {
+            BufferedWriter bufferedWriter;
+            try {
+                bufferedWriter = new BufferedWriter(new FileWriter(fileName));
+                for (Task t : tasks) {
+                    bufferedWriter.write(t.toString());
+                    bufferedWriter.newLine();
+                    bufferedWriter.flush();
+                }
+            } catch (IOException e) {
+                System.out.println("Error writing to file");
             }
-        } catch (IOException e) {
-            System.out.println("Error writing to file");
         }
     }
 }

@@ -1,6 +1,6 @@
 [T][ ] play league of legends
-[D][ ] cs2105 assignment0  (by: 29/08/2024 1830)
-[E][ ] mooncake event  (from: 29/08/2024 1830 to: 29/08/2024 2030)
+[D][ ] cs2105 assignment0  (by: 30/08/2024 1316)
+[E][ ] mooncake event  (from: 30/08/2024 1316 to: 30/08/2024 1316)
 [T][ ] go home
-[D][ ] apply sep  (by: 29/08/2024 0000)
+[D][ ] apply sep  (by: 30/08/2024 1316)
 [T][ ] relax

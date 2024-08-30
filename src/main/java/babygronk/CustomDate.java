@@ -1,4 +1,4 @@
-package BabyGronk;
+package babygronk;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,10 +15,14 @@ public class CustomDate {
             parseDate(date);
         } catch (DateTimeParseException e) {
             localDate = LocalDate.now();
+            localTime = LocalTime.now();
         }
     }
 
     private void parseDate(String date) throws DateTimeParseException {
+        if (date == null || date.isEmpty()) {
+            throw new DateTimeParseException("Date cannot be empty", "", 0);
+        }
         String[] args = date.split(" ");
         DateTimeFormatter formatter = null;
         if (args.length == 2) {
@@ -45,7 +49,7 @@ public class CustomDate {
     public String toString() {
         int day = localDate.getDayOfMonth();
         StringBuilder date = new StringBuilder();
-        if (day % 10 < 4 && day / 10 != 1) {
+        if (day % 10 < 4 && day % 10 > 0 && day / 10 != 1) {
             switch (day % 10) {
             case 1:
                 date.append(day).append("st");
