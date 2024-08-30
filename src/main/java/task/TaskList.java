@@ -63,6 +63,26 @@ public class TaskList {
         return (builder.toString());
     }
 
+    public String   find(String needle) {
+        List<Task> matches = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.display().contains(needle)) {
+                matches.add(task);
+            }
+        }
+
+        if (matches.isEmpty()) {
+            return ("No matches to " + needle + " found\n");
+        }
+
+        StringBuilder builder = new StringBuilder("I found some matches! W rizz\n");
+        for (int i = 0; i < matches.size(); i++) {
+            Task task = matches.get(i);
+            builder.append(i + 1).append(".").append(task.display()).append("\n");
+        }
+        return (builder.toString());
+    }
+
     public List<Task> getTasks() {
         return (tasks);
     }

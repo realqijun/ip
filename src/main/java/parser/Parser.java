@@ -34,6 +34,10 @@ public class Parser {
             }
             return (new Instruction(args[0], args));
         }
+        if (args[0].equals("find")) {
+            String[] findArgs = input.split(" ", 2);
+            return (new Instruction(args[0], findArgs));
+        }
         if (args[0].equals("todo") || args[0].equals("deadline") || args[0].equals("event")) {
             if (args.length < 2) {
                 throw new InvalidInputException("No grimace shake for you ([task_type] [task_name] [args])\n");
