@@ -17,6 +17,7 @@ public class CustomDate {
         try {
             parseDate(date);
         } catch (DateTimeParseException e) {
+            System.out.println(e.getMessage());
             localDate = LocalDate.now();
             localTime = LocalTime.now();
         }
@@ -24,10 +25,11 @@ public class CustomDate {
 
     private void parseDate(String date) throws DateTimeParseException {
         if (date == null || date.isEmpty()) {
+            System.out.println("hello");
             throw new DateTimeParseException("Date cannot be empty", "", 0);
         }
         String[] args = date.split(" ");
-        DateTimeFormatter formatter = null;
+        DateTimeFormatter formatter;
         if (args.length == 2) {
             if (args[0].contains("/")) {
                 formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm");
@@ -39,8 +41,9 @@ public class CustomDate {
             LocalDateTime dateTime = LocalDateTime.parse(date, formatter);
             localDate = dateTime.toLocalDate();
             localTime = dateTime.toLocalTime();
+        } else {
+            throw new DateTimeParseException("Invalid date format", date, 0);
         }
-        throw new DateTimeParseException("Invalid date format", date, 0);
     }
 
     /**

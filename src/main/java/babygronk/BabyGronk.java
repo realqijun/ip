@@ -54,6 +54,9 @@ public class BabyGronk {
         if (instruction.getInstruction().equals("delete")) {
             return (taskList.delete(instruction.getArgs()));
         }
+        if (instruction.getInstruction().equals("find")) {
+            return (taskList.find(instruction.getArgs()[0]));
+        }
         if (instruction.getInstruction().equals("todo") || instruction.getInstruction().equals("deadline") ||
                 instruction.getInstruction().equals("event")) {
             return (addTask(instruction));
