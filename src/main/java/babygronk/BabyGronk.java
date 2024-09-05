@@ -24,7 +24,7 @@ public class BabyGronk {
 
     private TaskList taskList;
 
-    BabyGronk(String fileName) {
+    public BabyGronk(String fileName) {
         ui = new Ui();
         storage = new Storage(fileName);
         taskList = new TaskList(storage.init());
@@ -128,6 +128,10 @@ public class BabyGronk {
                 break;
             }
         }
+    }
+
+    public String getResponse(String input) {
+        return ("BabyGronk heard: " + input);
     }
 
     public static void  main(String[] args) {
