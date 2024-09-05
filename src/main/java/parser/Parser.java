@@ -17,9 +17,9 @@ public class Parser {
      * @return Single string with single space between words.
      * @throws EmptyInputException If the string is null or empty.
      */
-    public static String   parseInput(String input) throws EmptyInputException {
+    public static String parseInput(String input) throws EmptyInputException {
         if (input == null || input.isEmpty()) {
-            throw new EmptyInputException ("What bro? You're too fanum taxed\n");
+            throw new EmptyInputException("What bro? You're too fanum taxed\n");
         }
         return (String.join(" ", input.strip().split("\\s+")));
     }
@@ -83,6 +83,7 @@ public class Parser {
                 eventReturn[0] = eventTemp[0];
                 System.arraycopy(eventArgs, 0, eventReturn, 1, eventArgs.length);
                 return (new Instruction(eventTemp[0], eventReturn));
+            default:
             }
         }
         throw new InvalidInputException("invalid task type (only todo, deadline, event allowed)\n");

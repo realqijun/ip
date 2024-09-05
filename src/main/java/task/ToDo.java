@@ -4,14 +4,14 @@ package task;
  * Task child class identical to task.
  */
 public class ToDo extends Task {
-    private final static String TASK_TYPE = "[T]";
+    private static final String TASK_TYPE = "[T]";
 
     public ToDo(String task) {
         super(task);
     }
 
     @Override
-    public String   display() {
+    public String display() {
         return (TASK_TYPE + super.toString());
     }
     @Override

@@ -4,7 +4,7 @@ package babygronk;
  * Contains functions that prints customized messages.
  */
 public class Ui {
-    private final static String SEPARATOR =  "💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬\n";
+    private static final String SEPARATOR = "💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬\n";
 
     Ui() {
     }
@@ -13,26 +13,19 @@ public class Ui {
      * Prints goodbye message and exits with status 0.
      */
     public void logOff() {
-        String goodByeMessage = SEPARATOR +
-                """
+        String goodByeMessage = SEPARATOR
+                + """
                 Going back to my skibidi toilet.
-                """ +
-                SEPARATOR;
+                """
+                + SEPARATOR;
         System.out.println(goodByeMessage);
         System.exit(0);
     }
 
-    public void    greet() {
-        String welcomeMessage = SEPARATOR +
-                """ 
-                What's up ohio? I'm BabyGronk, let's see how sigma you are
-                Gyatt Damn
-                """ +
-                SEPARATOR;
-        System.out.println(welcomeMessage);
-    }
-
-    public void    mascot() {
+    /**
+     * Prints welcome message
+     */
+    public void greet() {
         String logo = """
                 ⣠⣀⣤⣶⣶⣶⣶⣤⣤⣤⣤⣄⡀⠀⠀⠀⢀⣀⣀⣤⣤⣤⣶⣶⣶⣶⣬⣒⢦⡀
                 ⡾⠛⠉⠉⢀⣀⣈⣉⣉⣉⣻⠛⠁⠀⠀⠀⠀⠙⢛⣛⣉⣉⣉⣉⣀⠀⠉⠙⠻⢮
@@ -46,6 +39,13 @@ public class Ui {
                 ⠀⠀⠀⠀⠀⠀⠸⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡟⠀⠀⠀⠀
                 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀""";
         System.out.println("Up your rizz\n" + logo);
+        String welcomeMessage = SEPARATOR
+                + """
+                What's up ohio? I'm BabyGronk, let's see how sigma you are
+                Gyatt Damn
+                """
+                + SEPARATOR;
+        System.out.println(welcomeMessage);
     }
 
     public void printMessage(String message) {
