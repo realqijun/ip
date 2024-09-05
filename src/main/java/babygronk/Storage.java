@@ -1,16 +1,16 @@
 package babygronk;
 
-import task.Task;
-
-import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Stream;
+
+import task.Task;
 
 /**
  * Creates file and reads and stores data in it.
@@ -66,6 +66,11 @@ public class Storage {
         return (null);
     }
 
+    /**
+     * Saves tasks into the storage file using bufferedWriter.
+     *
+     * @param tasks List of tasks.
+     */
     public void saveData(List<Task> tasks) {
         if (fileCreated()) {
             BufferedWriter bufferedWriter;

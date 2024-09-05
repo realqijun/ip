@@ -13,6 +13,11 @@ public class CustomDate {
     private LocalDate localDate;
     private LocalTime localTime;
 
+    /**
+     * CustomDate constructor method.
+     *
+     * @param date Date string of format dd/mm/yyyy hhmm or dd-mm-yyyy hhmm.
+     */
     public CustomDate(String date) {
         try {
             parseDate(date);
@@ -71,6 +76,7 @@ public class CustomDate {
             case 3:
                 date.append(day).append("rd");
                 break;
+            default:
             }
         } else {
             date.append(day).append("th");

@@ -1,5 +1,7 @@
 package babygronk;
 
+import java.util.Scanner;
+
 import parser.EmptyInputException;
 import parser.Instruction;
 import parser.InvalidInputException;
@@ -9,8 +11,6 @@ import task.Event;
 import task.Task;
 import task.TaskList;
 import task.ToDo;
-
-import java.util.Scanner;
 
 /**
  * BabyGronk is the main class where all the program logic is handled.
@@ -24,13 +24,19 @@ public class BabyGronk {
 
     private TaskList taskList;
 
+    /**
+     * Constructor for babyGronk, takes a String as input.
+     * String should be a relative file pathname to init and store the tasks to.
+     *
+     * @param fileName File pathname string.
+     */
     public BabyGronk(String fileName) {
         ui = new Ui();
         storage = new Storage(fileName);
         taskList = new TaskList(storage.init());
     }
 
-    private String   handleInput(String input) {
+    private String handleInput(String input) {
         Parser parser = new Parser();
         Instruction instruction;
         try {
@@ -57,8 +63,8 @@ public class BabyGronk {
         if (instruction.getInstruction().equals("find")) {
             return (taskList.find(instruction.getArgs()[0]));
         }
-        if (instruction.getInstruction().equals("todo") || instruction.getInstruction().equals("deadline") ||
-                instruction.getInstruction().equals("event")) {
+        if (instruction.getInstruction().equals("todo") || instruction.getInstruction().equals("deadline")
+                || instruction.getInstruction().equals("event")) {
             return (addTask(instruction));
         }
         return (null);
@@ -74,10 +80,17 @@ public class BabyGronk {
             return (taskList.add(new Deadline(args[0], args[1])));
         case "event":
             return (taskList.add(new Event(args[0], args[1], args[2])));
+        default:
+            return ("Invalid task: " + task + " (parser failed probably)");
         }
-        return null;
     }
 
+    /**
+     * Initializes tasks from string.
+     *
+     * @param input Task string.
+     * @return A task object.
+     */
     public static Task initTasks(String input) {
         String[] args = input.split("] ");
         if (args[0].charAt(1) == 'T') {
@@ -112,7 +125,6 @@ public class BabyGronk {
      * Runs the program on a loop waiting for user input using scanner and handling it.
      */
     public void run() {
-        ui.mascot();
         ui.greet();
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -134,7 +146,7 @@ public class BabyGronk {
         return ("BabyGronk heard: " + input);
     }
 
-    public static void  main(String[] args) {
+    public static void main(String[] args) {
         new BabyGronk("./data/BabyGronk.txt").run();
     }
 }

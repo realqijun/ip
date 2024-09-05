@@ -7,6 +7,11 @@ public abstract class Task {
     private String taskName;
     private boolean isDone;
 
+    /**
+     * Task constructor method.
+     *
+     * @param task Task name.
+     */
     public Task(String task) {
         taskName = task;
         isDone = false;
@@ -18,7 +23,7 @@ public abstract class Task {
         isDone = done;
     }
 
-    public boolean  isDone() {
+    public boolean isDone() {
         return (isDone);
     }
 

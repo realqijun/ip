@@ -1,10 +1,10 @@
 package task;
 
-import babygronk.BabyGronk;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
+
+import babygronk.BabyGronk;
 
 /**
  * Stores a list of tasks in an ArrayList data structure.
@@ -12,6 +12,12 @@ import java.util.stream.Stream;
 public class TaskList {
     private List<Task> tasks;
 
+    /**
+     * Main constructor for taskList. Takes in a Stream of strings each representing a task.
+     * Invokes BabyGronk::initTasks for each string and adds them to the arraylist.
+     *
+     * @param tasks Steam of tasks.
+     */
     public TaskList(Stream<String> tasks) {
         this.tasks = new ArrayList<>(100);
         if (tasks != null) {
@@ -21,6 +27,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Deletes tasks given in input.
+     *
+     * @param input Array of strings, each string representing a task.
+     * @return Status of deletion.
+     */
     public String delete(String[] input) {
         StringBuilder builder = new StringBuilder();
         for (String s : input) {
@@ -39,13 +51,27 @@ public class TaskList {
         return (builder.toString());
     }
 
+    /**
+     * Adds a task to the list.
+     *
+     * @param task A task.
+     * @return The status string.
+     */
     public String add(Task task) {
         tasks.add(task);
-        return ("added task: " + tasks.get(tasks.size() - 1).toString() + "\n" +
-                tasks.size() + " task(s) in the list rn\n");
+        return ("added task: " + tasks.get(tasks.size() - 1).toString() + "\n"
+                + tasks.size() + " task(s) in the list rn\n");
     }
 
-    public String   markTask(String[] input, boolean status) {
+    /**
+     * Marks the tasks as done/not done. Stops marking tasks if one of them
+     * in the list is already marked done/undone.
+     *
+     * @param input The list of tasks to mark as done/undone.
+     * @param status True if to mark as done, and False to unmark.
+     * @return The status string.
+     */
+    public String markTask(String[] input, boolean status) {
         StringBuilder builder = new StringBuilder();
         for (String s : input) {
             int toMark = Integer.parseInt(s);
@@ -67,7 +93,13 @@ public class TaskList {
         return (builder.toString());
     }
 
-    public String   find(String needle) {
+    /**
+     * Finds the task that matches needle string.
+     *
+     * @param needle The keyword of string to find.
+     * @return If found, the description of every task that matches, else, "No Matches".
+     */
+    public String find(String needle) {
         List<Task> matches = new ArrayList<>();
         for (Task task : tasks) {
             if (task.display().contains(needle)) {

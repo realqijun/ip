@@ -1,9 +1,10 @@
 package seedu.babygronk;
 
-import org.junit.jupiter.api.Test;
-import task.ToDo;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
+import task.ToDo;
 
 public class TodoTest {
 
