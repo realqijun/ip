@@ -1,5 +1,7 @@
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -7,38 +9,44 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
+import java.io.IOException;
+import java.util.Collections;
+
 public class DialogBox extends HBox {
 
+    @FXML
     private Label text;
+    @FXML
     private ImageView image;
-    //private ImageView background = new ImageView();
+
+    //private static final Image bgImage = new Image("/images/bg.png");
 
     public DialogBox(String s, Image i) {
-        text = new Label(s);
-        image = new ImageView(i);
-        text.setWrapText(true);
-        text.setPadding(new Insets(5, 10, 5, 10));
-        image.setFitWidth(100.0);
-        image.setFitHeight(100.0);
-        image.setClip(new Circle(50, 50, 50.0));
-        this.setAlignment(Pos.TOP_RIGHT);
-        this.setPadding(new Insets(10, 10, 10, 10));
-        this.getChildren().addAll(text, image);
-        //this.setBackground(new Background(new ImagePattern(image)));
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
+            fxmlLoader.setController(this);
+            fxmlLoader.setRoot(this);
+            fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        text.setText(s);
+        image.setImage(i);
     }
 
     /**
      * Flips the dialog box such that the ImageView is on the left and text on the right.
      */
     private void flip() {
-        this.setAlignment(Pos.TOP_LEFT);
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
-        FXCollections.reverse(tmp);
+        Collections.reverse(tmp);
         this.getChildren().setAll(tmp);
+        this.setAlignment(Pos.TOP_LEFT);
     }
 
     public static DialogBox getClientDialog(String s, Image i) {
