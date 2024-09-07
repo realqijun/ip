@@ -11,7 +11,7 @@ public class ToDo extends Task {
     }
 
     @Override
-    public String display() {
+    public String toStorageFormat() {
         return (TASK_TYPE + super.toString());
     }
     @Override

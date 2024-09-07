@@ -15,6 +15,6 @@ public class TodoTest {
 
     @Test
     public void displayTest() {
-        assertEquals(new ToDo("test").display(), new ToDo("test").display());
+        assertEquals(new ToDo("test").toStorageFormat(), new ToDo("test").toStorageFormat());
     }
 }

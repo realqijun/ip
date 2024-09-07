@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import babygronk.BabyGronk;
-
 /**
  * Stores a list of tasks in an ArrayList data structure.
  */
@@ -22,8 +20,37 @@ public class TaskList {
         this.tasks = new ArrayList<>(100);
         if (tasks != null) {
             tasks.forEach((task) -> {
-                this.tasks.add(BabyGronk.initTasks(task));
+                this.tasks.add(initTasks(task));
             });
+        }
+    }
+
+    private static Task initTasks(String input) {
+        String[] args = input.split("] ");
+        if (args[0].charAt(1) == 'T') {
+            ToDo todo = new ToDo(args[1]);
+            if (args[0].charAt(4) == 'X') {
+                todo.setDone(true);
+            }
+            return (todo);
+        } else if (args[0].charAt(1) == 'D') {
+            String[] args2 = args[1].split(" \\(");
+            Deadline deadline = new Deadline(args2[0], args2[1].substring(4, args2[1].length() - 1));
+            if (args[0].charAt(4) == 'X') {
+                deadline.setDone(true);
+            }
+            return (deadline);
+        } else if (args[0].charAt(1) == 'E') {
+            String[] args2 = args[1].split(" \\(");
+            String[] args3 = args2[1].split(" to: ");
+            Event event = new Event(args2[0], args3[0].substring(6), args3[1].substring(0, args3[1].length() - 1));
+            if (args[0].charAt(4) == 'X') {
+                event.setDone(true);
+            }
+            return (event);
+        } else {
+            System.out.println("Line: " + input + " has invalid format type, data cannot be loaded");
+            return (null);
         }
     }
 
@@ -85,9 +112,9 @@ public class TaskList {
             }
             task.setDone(status);
             if (status) {
-                builder.append("Let's go! +100 aura points!\n").append(task).append("\n");
+                builder.append("Let's go! +100 aura points!\n").append(task).append(" marked as done\n");
             } else {
-                builder.append("Bruh, you're cooked, -500 aura points\n").append(task).append("\n");
+                builder.append("Bruh, you're cooked, -500 aura points\n").append(task).append(" has been unmarked\n");
             }
         }
         return (builder.toString());
@@ -102,7 +129,7 @@ public class TaskList {
     public String find(String needle) {
         List<Task> matches = new ArrayList<>();
         for (Task task : tasks) {
-            if (task.display().contains(needle)) {
+            if (task.toString().contains(needle)) {
                 matches.add(task);
             }
         }
@@ -114,7 +141,7 @@ public class TaskList {
         StringBuilder builder = new StringBuilder("I found some matches! W rizz\n");
         for (int i = 0; i < matches.size(); i++) {
             Task task = matches.get(i);
-            builder.append(i + 1).append(".").append(task.display()).append("\n");
+            builder.append(i + 1).append(".").append(task.toString()).append("\n");
         }
         return (builder.toString());
     }
@@ -127,7 +154,7 @@ public class TaskList {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < tasks.size(); i++) {
-            builder.append(i + 1).append(".").append(tasks.get(i).display()).append("\n");
+            builder.append(i + 1).append(".").append(tasks.get(i).toString()).append("\n");
         }
         return (builder.toString());
     }

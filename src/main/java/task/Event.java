@@ -24,13 +24,13 @@ public class Event extends Task {
     }
 
     @Override
-    public String display() {
-        return (TASK_TYPE + super.toString() + " (from: " + from + " to: " + to + ")");
+    public String toStorageFormat() {
+        return (TASK_TYPE + super.toString()
+                + " (from: " + from.unparseDate() + " to: " + to.unparseDate() + ")");
     }
 
     @Override
     public String toString() {
-        return (TASK_TYPE + super.toString()
-                + " (from: " + from.unparseDate() + " to: " + to.unparseDate() + ")");
+        return (TASK_TYPE + super.toString() + " (from: " + from + " to: " + to + ")");
     }
 }

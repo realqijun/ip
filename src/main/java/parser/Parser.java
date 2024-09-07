@@ -32,7 +32,10 @@ public class Parser {
      * @throws InvalidInputException When input is not valid/defined in project page.
      */
     public Instruction parseInstruction(String input) throws InvalidInputException {
-        String[] args = input.split(" ");
+        String[] args = input.toLowerCase().split(" ");
+        if (input.startsWith("hello") || input.startsWith("hi")) {
+            return (new Instruction("hi", args));
+        }
         if (input.startsWith("bye")) {
             return (new Instruction(args[0], args));
         }

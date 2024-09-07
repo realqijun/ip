@@ -1,11 +1,15 @@
+import java.io.IOException;
+
 import babygronk.BabyGronk;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * Controller for the main GUI.
@@ -21,16 +25,30 @@ public class MainWindow extends AnchorPane {
     private Button sendButton;
 
     private BabyGronk babyGronk;
+    private Stage stage;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.jpg"));
     private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/babygronk.jpg"));
+
+    /**
+     * What am I doing.
+     */
+    public MainWindow() {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
+            loader.setController(this);
+            loader.setRoot(this);
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(vBox.heightProperty());
     }
 
-    /** Injects the Duke instance */
     public void setBabyGronk(BabyGronk bg) {
         babyGronk = bg;
     }

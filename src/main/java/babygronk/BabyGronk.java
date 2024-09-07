@@ -8,7 +8,6 @@ import parser.InvalidInputException;
 import parser.Parser;
 import task.Deadline;
 import task.Event;
-import task.Task;
 import task.TaskList;
 import task.ToDo;
 
@@ -43,6 +42,9 @@ public class BabyGronk {
             instruction = parser.parseInstruction(input);
         } catch (InvalidInputException e) {
             return (e.getMessage());
+        }
+        if (instruction.getInstruction().equals("hi")) {
+            return (Ui.sayHi());
         }
         if (instruction.getInstruction().equals("bye")) {
             storage.saveData(taskList.getTasks());
@@ -86,41 +88,6 @@ public class BabyGronk {
     }
 
     /**
-     * Initializes tasks from string.
-     *
-     * @param input Task string.
-     * @return A task object.
-     */
-    public static Task initTasks(String input) {
-        String[] args = input.split("] ");
-        if (args[0].charAt(1) == 'T') {
-            ToDo todo = new ToDo(args[1]);
-            if (args[0].charAt(4) == 'X') {
-                todo.setDone(true);
-            }
-            return (todo);
-        } else if (args[0].charAt(1) == 'D') {
-            String[] args2 = args[1].split(" \\(");
-            Deadline deadline = new Deadline(args2[0], args2[1].substring(4, args2[1].length() - 1));
-            if (args[0].charAt(4) == 'X') {
-                deadline.setDone(true);
-            }
-            return (deadline);
-        } else if (args[0].charAt(1) == 'E') {
-            String[] args2 = args[1].split(" \\(");
-            String[] args3 = args2[1].split(" to: ");
-            Event event = new Event(args2[0], args3[0].substring(6), args3[1].substring(0, args3[1].length() - 1));
-            if (args[0].charAt(4) == 'X') {
-                event.setDone(true);
-            }
-            return (event);
-        } else {
-            System.out.println("Line: " + input + " has invalid format type, data cannot be loaded");
-            return (null);
-        }
-    }
-
-    /**
      * Starts by displaying welcome message.
      * Runs the program on a loop waiting for user input using scanner and handling it.
      */
@@ -143,7 +110,11 @@ public class BabyGronk {
     }
 
     public String getResponse(String input) {
-        return ("BabyGronk heard: " + input);
+        try {
+            return handleInput(Parser.parseInput(input));
+        } catch (EmptyInputException e) {
+            return (e.getMessage());
+        }
     }
 
     public static void main(String[] args) {
