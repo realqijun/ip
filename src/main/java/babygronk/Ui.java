@@ -12,7 +12,7 @@ public class Ui {
     /**
      * Prints goodbye message and exits with status 0.
      */
-    public void logOff() {
+    protected void logOff() {
         String goodByeMessage = SEPARATOR
                 + """
                 Going back to my skibidi toilet.
@@ -25,7 +25,7 @@ public class Ui {
     /**
      * Prints welcome message
      */
-    public void greet() {
+    protected void greet() {
         String logo = """
                 ⣠⣀⣤⣶⣶⣶⣶⣤⣤⣤⣤⣄⡀⠀⠀⠀⢀⣀⣀⣤⣤⣤⣶⣶⣶⣶⣬⣒⢦⡀
                 ⡾⠛⠉⠉⢀⣀⣈⣉⣉⣉⣻⠛⠁⠀⠀⠀⠀⠙⢛⣛⣉⣉⣉⣉⣀⠀⠉⠙⠻⢮
@@ -46,6 +46,18 @@ public class Ui {
                 """
                 + SEPARATOR;
         System.out.println(welcomeMessage);
+    }
+
+    protected static String sayHi() {
+        return ("""
+                👋 Hello 👋
+                """);
+    }
+
+    protected static String sayBye() {
+        return ("""
+                Bye.
+                """);
     }
 
     public void printMessage(String message) {

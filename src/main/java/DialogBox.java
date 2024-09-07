@@ -1,44 +1,55 @@
+import java.io.IOException;
+import java.util.Collections;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
+/**
+ * A horizontal box for user's image and text.
+ */
 public class DialogBox extends HBox {
 
+    @FXML
     private Label text;
+    @FXML
     private ImageView image;
-    //private ImageView background = new ImageView();
 
+    /**
+     * @param s {@code String} Dialog text.
+     * @param i {@code Image} Image of user/server.
+     */
     public DialogBox(String s, Image i) {
-        text = new Label(s);
-        image = new ImageView(i);
-        text.setWrapText(true);
-        text.setPadding(new Insets(5, 10, 5, 10));
-        image.setFitWidth(100.0);
-        image.setFitHeight(100.0);
-        image.setClip(new Circle(50, 50, 50.0));
-        this.setAlignment(Pos.TOP_RIGHT);
-        this.setPadding(new Insets(10, 10, 10, 10));
-        this.getChildren().addAll(text, image);
-        //this.setBackground(new Background(new ImagePattern(image)));
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));
+            fxmlLoader.setController(this);
+            fxmlLoader.setRoot(this);
+            fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        text.setText(s);
+        image.setImage(i);
+        image.setClip(new Circle(50, 50, 45.0));
     }
 
     /**
      * Flips the dialog box such that the ImageView is on the left and text on the right.
      */
     private void flip() {
-        this.setAlignment(Pos.TOP_LEFT);
         ObservableList<Node> tmp = FXCollections.observableArrayList(this.getChildren());
-        FXCollections.reverse(tmp);
+        Collections.reverse(tmp);
         this.getChildren().setAll(tmp);
+        this.setAlignment(Pos.TOP_LEFT);
+        text.getStyleClass().add("reply-label");
     }
 
     public static DialogBox getClientDialog(String s, Image i) {

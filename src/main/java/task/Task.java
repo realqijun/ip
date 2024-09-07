@@ -17,7 +17,7 @@ public abstract class Task {
         isDone = false;
     }
 
-    public abstract String display();
+    public abstract String toStorageFormat();
 
     public void setDone(boolean done) {
         isDone = done;

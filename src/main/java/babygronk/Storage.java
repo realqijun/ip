@@ -77,7 +77,7 @@ public class Storage {
             try {
                 bufferedWriter = new BufferedWriter(new FileWriter(fileName));
                 for (Task t : tasks) {
-                    bufferedWriter.write(t.toString());
+                    bufferedWriter.write(t.toStorageFormat());
                     bufferedWriter.newLine();
                     bufferedWriter.flush();
                 }

@@ -21,12 +21,12 @@ public class Deadline extends Task {
     }
 
     @Override
-    public String display() {
-        return (TASK_TYPE + super.toString() + " (by: " + deadline + ")");
+    public String toStorageFormat() {
+        return (TASK_TYPE + super.toString() + " (by: " + deadline.unparseDate() + ")");
     }
 
     @Override
     public String toString() {
-        return (TASK_TYPE + super.toString() + " (by: " + deadline.unparseDate() + ")");
+        return (TASK_TYPE + super.toString() + " (by: " + deadline + ")");
     }
 }
