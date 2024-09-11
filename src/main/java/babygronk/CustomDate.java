@@ -30,7 +30,6 @@ public class CustomDate {
 
     private void parseDate(String date) throws DateTimeParseException {
         if (date == null || date.isEmpty()) {
-            System.out.println("hello");
             throw new DateTimeParseException("Date cannot be empty", "", 0);
         }
         String[] args = date.split(" ");
@@ -63,9 +62,10 @@ public class CustomDate {
 
     @Override
     public String toString() {
+        assert localDate != null;
         int day = localDate.getDayOfMonth();
         StringBuilder date = new StringBuilder();
-        if (day % 10 < 4 && day % 10 > 0 && day / 10 != 1) {
+        if (day / 10 != 1) {
             switch (day % 10) {
             case 1:
                 date.append(day).append("st");
@@ -77,6 +77,7 @@ public class CustomDate {
                 date.append(day).append("rd");
                 break;
             default:
+                date.append(day).append("th");
             }
         } else {
             date.append(day).append("th");
