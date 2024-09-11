@@ -72,7 +72,7 @@ public class Parser {
                 if (deadlineArgs.length != 2) {
                     throw new InvalidInputException("no deadline!\n");
                 }
-                String[] deadlineRet = Arrays.copyOfRange(deadlineArgs, 2, deadlineArgs.length);
+                String[] deadlineRet = Arrays.copyOf(deadlineArgs, deadlineArgs.length + 1);
                 deadlineRet[0] = deadlineTemp[0];
                 System.arraycopy(deadlineArgs, 0, deadlineRet, 1, deadlineArgs.length);
                 return (new Instruction(deadlineTemp[0], deadlineRet));
@@ -87,8 +87,14 @@ public class Parser {
                 System.arraycopy(eventArgs, 0, eventReturn, 1, eventArgs.length);
                 return (new Instruction(eventTemp[0], eventReturn));
             default:
+                throw new InvalidInputException("Unknown command '" + args[0] + "'\n"); //shouldn't reach here
             }
         }
         throw new InvalidInputException("invalid task type (only todo, deadline, event allowed)\n");
+    }
+
+    public static void main(String[] args) throws InvalidInputException {
+        Parser parser = new Parser();
+        parser.parseInstruction("deadline . /by fe");
     }
 }
