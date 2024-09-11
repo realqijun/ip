@@ -146,8 +146,8 @@ public class TaskList {
         return (builder.toString());
     }
 
-    public List<Task> getTasks() {
-        return (tasks);
+    public Stream<Task> getTasks() {
+        return (tasks.stream());
     }
 
     @Override
