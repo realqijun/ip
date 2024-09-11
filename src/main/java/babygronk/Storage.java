@@ -7,7 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 import java.util.stream.Stream;
 
 import task.Task;
@@ -71,16 +70,18 @@ public class Storage {
      *
      * @param tasks List of tasks.
      */
-    public void saveData(List<Task> tasks) {
+    public void saveData(Stream<Task> tasks) {
         if (fileCreated()) {
-            BufferedWriter bufferedWriter;
             try {
-                bufferedWriter = new BufferedWriter(new FileWriter(fileName));
-                for (Task t : tasks) {
-                    bufferedWriter.write(t.toStorageFormat());
-                    bufferedWriter.newLine();
-                    bufferedWriter.flush();
-                }
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
+                tasks.forEach(task -> {
+                    try {
+                        bufferedWriter.write(task.toStorageFormat());
+                        bufferedWriter.newLine();
+                    } catch (IOException e) {
+                        System.out.println("Failed to save task: " + task);
+                    }
+                });
             } catch (IOException e) {
                 System.out.println("Error writing to file");
             }
