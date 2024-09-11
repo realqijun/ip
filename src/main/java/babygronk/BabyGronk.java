@@ -36,6 +36,7 @@ public class BabyGronk {
     }
 
     private String handleInput(String input) {
+        assert input != null;
         Parser parser = new Parser();
         Instruction instruction;
         try {
