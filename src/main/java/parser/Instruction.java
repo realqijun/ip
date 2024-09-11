@@ -26,4 +26,24 @@ public class Instruction {
     public String[] getArgs() {
         return (Arrays.copyOfRange(args, 1, args.length));
     }
+
+    public static boolean isTaskCommand(String input) {
+        return (input.equals("todo") || input.equals("event") || input.equals("deadline"));
+    }
+
+    public static boolean isMarkCommand(String input) {
+        return (input.equals("m") || input.equals("mark") || input.equals("um") || input.equals("unmark"));
+    }
+
+    public static boolean isDeleteCommand(String input) {
+        return (input.equals("d") || input.equals("del") || input.equals("delete"));
+    }
+
+    public static boolean isListCommand(String input) {
+        return (input.equals("l") || input.equals("list"));
+    }
+
+    public static boolean isFindCommand(String input) {
+        return (input.equals("f") || input.equals("find"));
+    }
 }

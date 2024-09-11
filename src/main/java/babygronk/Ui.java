@@ -6,9 +6,6 @@ package babygronk;
 public class Ui {
     private static final String SEPARATOR = "💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬💬\n";
 
-    Ui() {
-    }
-
     /**
      * Prints goodbye message and exits with status 0.
      */
@@ -56,7 +53,7 @@ public class Ui {
 
     protected static String sayBye() {
         return ("""
-                Bye.
+                Bye ✌️✌️
                 """);
     }
 

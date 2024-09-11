@@ -7,8 +7,8 @@ import babygronk.CustomDate;
  */
 public class Event extends Task {
     private static final String TASK_TYPE = "[E]";
-    private CustomDate from;
-    private CustomDate to;
+    private final CustomDate from;
+    private final CustomDate to;
 
     /**
      * Constructor for event task.
