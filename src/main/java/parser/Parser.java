@@ -7,9 +7,6 @@ import java.util.Arrays;
  */
 public class Parser {
 
-    public Parser() {
-    }
-
     /**
      * Formats the input by splitting it and then joining it with single space.
      *
@@ -39,56 +36,71 @@ public class Parser {
         if (input.startsWith("bye")) {
             return (new Instruction(args[0], args));
         }
-        if (input.startsWith("list")) {
+        if (Instruction.isMarkCommand(args[0])) {
             return (new Instruction(args[0], args));
         }
-        if (args[0].equals("mark") || args[0].equals("unmark") || args[0].equals("m") || args[0].equals("um")) {
+        if (Instruction.isMarkCommand(args[0])) {
             if (args.length < 2) {
-                throw new InvalidInputException("Are you acoustic? Give me a number! (mark/unmark [index])\n");
+                throw new InvalidInputException(InvalidCommands.INVALID_MARK_CMD);
             }
             return (new Instruction(args[0], args));
         }
-        if (args[0].equals("delete")) {
+        if (Instruction.isDeleteCommand(args[0])) {
             if (args.length < 2) {
-                throw new InvalidInputException("How can you not delete properly? (delete [index])\n");
+                throw new InvalidInputException(InvalidCommands.INVALID_DELETE_CMD);
             }
             return (new Instruction(args[0], args));
         }
-        if (args[0].equals("find")) {
+        if (Instruction.isFindCommand(args[0])) {
             String[] findArgs = input.split(" ", 2);
             return (new Instruction(args[0], findArgs));
         }
-        if (args[0].equals("todo") || args[0].equals("deadline") || args[0].equals("event")) {
+        if (Instruction.isTaskCommand(args[0])) {
             if (args.length < 2) {
-                throw new InvalidInputException("No grimace shake for you ([task_type] [task_name] [args])\n");
+                throw new InvalidInputException(InvalidCommands.INVALID_TASK_CMD);
             }
             switch (args[0]) {
             case "todo":
-                String[] todoTemp = input.split(" ", 2);
-                return (new Instruction(todoTemp[0], todoTemp));
+                return (createTodoInstruction(input));
             case "deadline":
-                String[] deadlineTemp = input.split(" ", 2);
-                String[] deadlineArgs = deadlineTemp[1].split(" /by ");
-                if (deadlineArgs.length != 2) {
-                    throw new InvalidInputException("no deadline!\n");
-                }
-                String[] deadlineRet = Arrays.copyOfRange(deadlineArgs, 2, deadlineArgs.length);
-                deadlineRet[0] = deadlineTemp[0];
-                System.arraycopy(deadlineArgs, 0, deadlineRet, 1, deadlineArgs.length);
-                return (new Instruction(deadlineTemp[0], deadlineRet));
+                return (createDeadlineInstruction(input));
             case "event":
-                String[] eventTemp = input.split(" ", 2);
-                String[] eventArgs = eventTemp[1].split(" /from | /to ");
-                if (eventArgs.length != 3) {
-                    throw new InvalidInputException("event start/end time is not determined\n");
-                }
-                String[] eventReturn = Arrays.copyOf(eventArgs, eventArgs.length + 1);
-                eventReturn[0] = eventTemp[0];
-                System.arraycopy(eventArgs, 0, eventReturn, 1, eventArgs.length);
-                return (new Instruction(eventTemp[0], eventReturn));
+                return (createEventInstruction(input));
             default:
             }
         }
-        throw new InvalidInputException("invalid task type (only todo, deadline, event allowed)\n");
+        throw new InvalidInputException(InvalidCommands.INVALID_INPUT);
+    }
+
+    private Instruction createTodoInstruction(String input) {
+        String[] todoArgs = input.split(" ", 2);
+        assert todoArgs.length == 2;
+        return (new Instruction("todo", todoArgs));
+    }
+
+    private Instruction createDeadlineInstruction(String input) throws InvalidInputException {
+        String[] deadlineArgs = input.split(" ", 2);
+
+        assert deadlineArgs.length == 2;
+        String[] deadlineDetails = deadlineArgs[1].split(" /by ");
+        if (deadlineDetails.length != 2) {
+            throw new InvalidInputException(InvalidCommands.INVALID_DEADLINE);
+        }
+
+        String[] deadlineRet = new String[] {deadlineArgs[0], deadlineDetails[0], deadlineDetails[1]};
+        return (new Instruction("deadline", deadlineRet));
+    }
+
+    private Instruction createEventInstruction(String input) throws InvalidInputException {
+        String[] eventArgs = input.split(" ", 2);
+
+        assert eventArgs.length == 2;
+        String[] eventDetails = eventArgs[1].split(" /from | /to ");
+        if (eventDetails.length != 3) {
+            throw new InvalidInputException(InvalidCommands.INVALID_EVENT);
+        }
+
+        String[] eventRet = new String[] {eventArgs[0], eventDetails[0], eventDetails[1], eventDetails[2]};
+        return (new Instruction("event", eventRet));
     }
 }

@@ -7,7 +7,7 @@ import babygronk.CustomDate;
  */
 public class Deadline extends Task {
     private static final String TASK_TYPE = "[D]";
-    private CustomDate deadline;
+    private final CustomDate deadline;
 
     /**
      * Constructor method for Deadline Task.
