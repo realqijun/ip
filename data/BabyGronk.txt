@@ -6,4 +6,3 @@
 [T][X] relax
 [T][ ] present
 [E][ ] computing day (from: 05/09/2024 0900 to: 05/09/2024 0900)
-[D][ ] . (by: 11/09/2024 1315)

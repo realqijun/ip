@@ -8,8 +8,8 @@ import java.util.stream.Stream;
  * Stores a list of tasks in an ArrayList data structure.
  */
 public class TaskList {
-    private final List<Task> tasks;
     private static final int INITIAL_SIZE = 100;
+    private final List<Task> tasks;
 
     /**
      * Main constructor for taskList. Takes in a Stream of strings each representing a task.
