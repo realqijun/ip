@@ -16,12 +16,12 @@ import task.ToDo;
  */
 public class BabyGronk {
     /** Stores info and handles data of the file containing the task list **/
-    private Storage storage;
+    private final Storage storage;
 
     /** Prints formatted message **/
-    private Ui ui;
+    private final Ui ui;
 
-    private TaskList taskList;
+    private final TaskList taskList;
 
     /**
      * Constructor for babyGronk, takes a String as input.
@@ -36,6 +36,7 @@ public class BabyGronk {
     }
 
     private String handleInput(String input) {
+        assert input != null;
         Parser parser = new Parser();
         Instruction instruction;
         try {
@@ -43,6 +44,7 @@ public class BabyGronk {
         } catch (InvalidInputException e) {
             return (e.getMessage());
         }
+        String command = instruction.getInstruction();
         if (instruction.getInstruction().equals("hi")) {
             return (Ui.sayHi());
         }
@@ -50,26 +52,25 @@ public class BabyGronk {
             storage.saveData(taskList.getTasks());
             ui.logOff();
         }
-        if (instruction.getInstruction().equals("list")) {
+        if (Instruction.isListCommand(command)) {
             return (taskList.toString());
         }
-        if (instruction.getInstruction().equals("mark") || instruction.getInstruction().equals("m")) {
+        if (command.equals("mark") || command.equals("m")) {
             return (taskList.markTask(instruction.getArgs(), true));
         }
-        if (instruction.getInstruction().equals("unmark") || instruction.getInstruction().equals("um")) {
+        if (command.equals("unmark") || command.equals("um")) {
             return (taskList.markTask(instruction.getArgs(), false));
         }
-        if (instruction.getInstruction().equals("delete")) {
+        if (Instruction.isDeleteCommand(command)) {
             return (taskList.delete(instruction.getArgs()));
         }
-        if (instruction.getInstruction().equals("find")) {
+        if (Instruction.isFindCommand(command)) {
             return (taskList.find(instruction.getArgs()[0]));
         }
-        if (instruction.getInstruction().equals("todo") || instruction.getInstruction().equals("deadline")
-                || instruction.getInstruction().equals("event")) {
+        if (Instruction.isTaskCommand(command)) {
             return (addTask(instruction));
         }
-        return (null);
+        return ("Error occurred, program shouldn't reach here");
     }
 
     private String addTask(Instruction instruction) {
@@ -111,7 +112,7 @@ public class BabyGronk {
 
     public String getResponse(String input) {
         try {
-            return handleInput(Parser.parseInput(input));
+            return (handleInput(Parser.parseInput(input)));
         } catch (EmptyInputException e) {
             return (e.getMessage());
         }

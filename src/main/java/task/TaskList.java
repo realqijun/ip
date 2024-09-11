@@ -8,7 +8,8 @@ import java.util.stream.Stream;
  * Stores a list of tasks in an ArrayList data structure.
  */
 public class TaskList {
-    private List<Task> tasks;
+    private final List<Task> tasks;
+    private static final int INITIAL_SIZE = 100;
 
     /**
      * Main constructor for taskList. Takes in a Stream of strings each representing a task.
@@ -17,41 +18,70 @@ public class TaskList {
      * @param tasks Steam of tasks.
      */
     public TaskList(Stream<String> tasks) {
-        this.tasks = new ArrayList<>(100);
+        this.tasks = new ArrayList<>(INITIAL_SIZE);
         if (tasks != null) {
-            tasks.forEach((task) -> {
-                this.tasks.add(initTasks(task));
-            });
+            tasks.forEach((task) -> this.tasks.add(initTasks(task)));
         }
     }
 
     private static Task initTasks(String input) {
         String[] args = input.split("] ");
-        if (args[0].charAt(1) == 'T') {
-            ToDo todo = new ToDo(args[1]);
-            if (args[0].charAt(4) == 'X') {
-                todo.setDone(true);
-            }
-            return (todo);
-        } else if (args[0].charAt(1) == 'D') {
-            String[] args2 = args[1].split(" \\(");
-            Deadline deadline = new Deadline(args2[0], args2[1].substring(4, args2[1].length() - 1));
-            if (args[0].charAt(4) == 'X') {
-                deadline.setDone(true);
-            }
-            return (deadline);
-        } else if (args[0].charAt(1) == 'E') {
-            String[] args2 = args[1].split(" \\(");
-            String[] args3 = args2[1].split(" to: ");
-            Event event = new Event(args2[0], args3[0].substring(6), args3[1].substring(0, args3[1].length() - 1));
-            if (args[0].charAt(4) == 'X') {
-                event.setDone(true);
-            }
-            return (event);
-        } else {
-            System.out.println("Line: " + input + " has invalid format type, data cannot be loaded");
-            return (null);
+        if (args.length != 2) {
+            return (invalidTask(input));
         }
+
+        char taskType = args[0].charAt(1);
+        boolean isDone = args[0].charAt(4) == 'X';
+
+        switch (taskType) {
+        case 'T':
+            return (initTodoTask(args[1], isDone));
+        case 'D':
+            return (initDeadlineTask(args[1], isDone));
+        case 'E':
+            return (initEventTask(args[1], isDone));
+        default:
+            return (invalidTask(input));
+        }
+    }
+
+    private static Task initTodoTask(String arg, boolean isDone) {
+        ToDo todo = new ToDo(arg);
+        todo.setDone(isDone);
+        return (todo);
+    }
+
+    private static Task initDeadlineTask(String arg, boolean isDone) {
+        String[] deadlineArgs = arg.split(" \\(");
+        if (deadlineArgs.length != 2) {
+            return (invalidTask(arg));
+        }
+
+        Deadline deadline = new Deadline(deadlineArgs[0], deadlineArgs[1].substring(4, deadlineArgs[1].length() - 1));
+        deadline.setDone(isDone);
+        return (deadline);
+    }
+
+    private static Task initEventTask(String arg, boolean isDone) {
+        String[] eventArgs = arg.split(" \\(");
+        if (eventArgs.length != 2) {
+            return (invalidTask(arg));
+        }
+
+        String[] eventDetails = eventArgs[1].split(" to: ");
+        if (eventDetails.length != 2) {
+            return (invalidTask(arg));
+        }
+
+        Event event = new Event(eventArgs[0], eventDetails[0].substring(6),
+                eventDetails[1].substring(0, eventDetails[1].length() - 1));
+        event.setDone(isDone);
+        return (event);
+    }
+
+    private static Task invalidTask(String input) {
+        System.out.println("Line: " + input + " has invalid format type, data cannot be loaded");
+        return (null);
     }
 
     /**
