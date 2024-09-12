@@ -2,6 +2,7 @@ package task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -157,22 +158,19 @@ public class TaskList {
      * @return If found, the description of every task that matches, else, "No Matches".
      */
     public String find(String needle) {
-        List<Task> matches = new ArrayList<>();
-        for (Task task : tasks) {
-            if (task.toString().contains(needle)) {
-                matches.add(task);
-            }
-        }
+        List<String> taskList = tasks.stream()
+                .map(Task::toString)
+                .filter(x -> x.contains(needle))
+                .toList();
 
-        if (matches.isEmpty()) {
+        if (taskList.isEmpty()) {
             return ("No matches to " + needle + " found\n");
         }
 
         StringBuilder builder = new StringBuilder("I found some matches! W rizz\n");
-        for (int i = 0; i < matches.size(); i++) {
-            Task task = matches.get(i);
-            builder.append(i + 1).append(".").append(task.toString()).append("\n");
-        }
+        IntStream.range(0, taskList.size())
+                .forEach(x -> builder.append(x + 1).append(".").append(taskList.get(x)).append("\n"));
+
         return (builder.toString());
     }
 
@@ -183,9 +181,8 @@ public class TaskList {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < tasks.size(); i++) {
-            builder.append(i + 1).append(".").append(tasks.get(i).toString()).append("\n");
-        }
+        IntStream.range(0, tasks.size())
+                .forEach(x -> builder.append(x + 1).append(".").append(tasks.get(x).toString()).append("\n"));
         return (builder.toString());
     }
 }
