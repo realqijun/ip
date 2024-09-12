@@ -1,7 +1,5 @@
 package parser;
 
-import java.util.Arrays;
-
 /**
  * Parses input from user given by run method in BabyGronk class.
  */
@@ -36,7 +34,7 @@ public class Parser {
         if (input.startsWith("bye")) {
             return (new Instruction(args[0], args));
         }
-        if (Instruction.isMarkCommand(args[0])) {
+        if (Instruction.isListCommand(args[0])) {
             return (new Instruction(args[0], args));
         }
         if (Instruction.isMarkCommand(args[0])) {
@@ -67,7 +65,7 @@ public class Parser {
             case "event":
                 return (createEventInstruction(input));
             default:
-                throw new InvalidInputException("Unknown command '" + args[0] + "'\n"); //shouldn't reach here
+                throw new InvalidInputException(InvalidCommands.UNKNOWN_ERROR); //shouldn't reach here
             }
         }
         throw new InvalidInputException(InvalidCommands.INVALID_INPUT);

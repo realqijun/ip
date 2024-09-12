@@ -82,6 +82,8 @@ public class Storage {
                         System.out.println("Failed to save task: " + task);
                     }
                 });
+                bufferedWriter.flush();
+                bufferedWriter.close();
             } catch (IOException e) {
                 System.out.println("Error writing to file");
             }
