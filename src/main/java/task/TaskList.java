@@ -25,7 +25,7 @@ public class TaskList {
         }
     }
 
-    private static Task initTasks(String input) {
+    private Task initTasks(String input) {
         String[] args = input.split("] ");
         if (args.length != 2) {
             return (invalidTask(input));
@@ -160,7 +160,7 @@ public class TaskList {
     public String find(String needle) {
         List<String> taskList = tasks.stream()
                 .map(Task::toString)
-                .filter(x -> x.contains(needle))
+                .filter(x -> x.contains(needle) || match_expression(x, needle))
                 .toList();
 
         if (taskList.isEmpty()) {
@@ -174,6 +174,33 @@ public class TaskList {
         return (builder.toString());
     }
 
+    private boolean match_expression(String str, String expr) {
+        int match_i = 0;
+        int prev_star = -1;
+        int expr_i = 0;
+        int str_i = 0;
+        while (str_i < str.length()) {
+            if (expr_i != expr.length() && expr.charAt(expr_i) == '*') {
+                match_i = str_i;
+                prev_star = expr_i;
+                expr_i++;
+            } else if (expr_i != expr.length() && str.charAt(str_i) == expr.charAt(expr_i)) {
+                expr_i++;
+                str_i++;
+            } else if (prev_star != -1) {
+                match_i++;
+                str_i = match_i;
+                expr_i = prev_star + 1;
+            } else {
+                return false;
+            }
+        }
+        while (expr_i != expr.length() && expr.charAt(expr_i) == '*') {
+            expr_i++;
+        }
+        return (expr_i == expr.length());
+    }
+
     public Stream<Task> getTasks() {
         return (tasks.stream());
     }
@@ -184,5 +211,9 @@ public class TaskList {
         IntStream.range(0, tasks.size())
                 .forEach(x -> builder.append(x + 1).append(".").append(tasks.get(x).toString()).append("\n"));
         return (builder.toString());
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new TaskList(null).match_expression("[T][X] play league of legends", "[*"));
     }
 }
