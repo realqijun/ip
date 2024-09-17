@@ -1,8 +1,5 @@
-import java.io.IOException;
-
 import babygronk.BabyGronk;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -29,20 +26,6 @@ public class MainWindow extends AnchorPane {
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.jpg"));
     private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/babygronk.jpg"));
-
-    /**
-     * What am I doing.
-     */
-    public MainWindow() {
-        try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
-            loader.setController(this);
-            loader.setRoot(this);
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @FXML
     public void initialize() {
