@@ -111,7 +111,7 @@ public class TaskList {
             }
             Task deleted = tasks.remove(toDelete - 1);
             builder.append(deleted).append("\n has been ejected (they were the impostor)\n")
-                    .append(tasks.size()).append(" tasks remain\n\n");
+                    .append(tasks.size()).append(" tasks remain\n");
         }
         return (builder.toString());
     }
@@ -223,6 +223,9 @@ public class TaskList {
 
     @Override
     public String toString() {
+        if (tasks.isEmpty()) {
+            return ("There's nobody left to mog! (Your list is empty)\n");
+        }
         StringBuilder builder = new StringBuilder();
         IntStream.range(0, tasks.size())
                 .forEach(x -> builder.append(x + 1).append(".").append(tasks.get(x).toString()).append("\n"));

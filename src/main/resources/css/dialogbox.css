@@ -5,13 +5,13 @@
     -fx-border-color: #ab5c84;
     -fx-border-width: 2px;
     -fx-background-radius: 1em 1em 0 1em;
-    -fx-border-radius: 1em 1em 0 1em;
+    -fx-border-radius: 0.5em 0.5em 0 0.5em;
 }
 
 .reply-label {
     -fx-text-fill: white;
     -fx-background-radius: 1em 1em 1em 0;
-    -fx-border-radius: 1em 1em 1em 0;
+    -fx-border-radius: 0.5em 0.5em 0.5em 0;
 }
 
 .add-label {

@@ -28,10 +28,10 @@ public class Parser {
      */
     public Instruction parseInstruction(String input) throws InvalidInputException {
         String[] args = input.toLowerCase().split(" ");
-        if (input.startsWith("hello") || input.startsWith("hi")) {
+        if (args[0].startsWith("hello") || args[0].startsWith("hi")) {
             return (new Instruction("hi", args));
         }
-        if (input.startsWith("bye") || input.startsWith("exit")) {
+        if (args[0].startsWith("bye") || args[0].startsWith("exit")) {
             return (new Instruction("bye", args));
         }
         if (Instruction.isListCommand(args[0])) {
