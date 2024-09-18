@@ -9,14 +9,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import babygronk.Storage;
 
 class StorageTest {
 
-    void cleanUp(String filePath) throws IOException {
-        File file = new File(filePath);
+    private static final String TEST_DATA_FILE = "src/test/data/StorageTest/test.txt";
+    @AfterEach
+    void cleanUp() throws IOException {
+        File file = new File(TEST_DATA_FILE);
         if (file.exists()) {
             Files.deleteIfExists(file.toPath());
             Files.deleteIfExists(file.getParentFile().toPath());
@@ -25,30 +28,32 @@ class StorageTest {
 
     @Test
     void testFileCreated() throws IOException {
-        String testFileName = "test_data/test.txt";
-        Storage storage = new Storage(testFileName);
+        Storage storage = new Storage(TEST_DATA_FILE);
         storage.init();
-        File testFile = new File(testFileName);
+        File testFile = new File(TEST_DATA_FILE);
         assertTrue(testFile.exists(), "The file should be created.");
-        cleanUp(testFileName);
     }
 
     @Test
     void testReadFromFile() throws IOException {
-        String testFileName = "tmp1/test.t";
-        Files.createDirectories(new File(testFileName).getParentFile().toPath());
-        Files.write(new File(testFileName).toPath(), "Task 1\nTask 2".getBytes());
+        Files.createDirectories(new File(TEST_DATA_FILE).getParentFile().toPath());
+        Files.write(new File(TEST_DATA_FILE).toPath(), "Task 1\nTask 2".getBytes());
 
-        Storage storage = new Storage(testFileName);
+        Storage storage = new Storage(TEST_DATA_FILE);
         Stream<String> lines = storage.init();
         assertNotNull(lines, "Stream of lines should not be null.");
-        cleanUp(testFileName);
     }
 
     @Test
-    void testInvalidPath() {
+    void testInvalidPath() throws IOException {
         Storage faultyStorage = new Storage(".///test.txt/");
         Stream<String> result = faultyStorage.init();
         assertNull(result, "Init should return null when file cannot be created.");
+
+        File file = new File(".///test.txt");
+        if (file.exists()) {
+            Files.deleteIfExists(file.toPath());
+            Files.deleteIfExists(file.getParentFile().toPath());
+        }
     }
 }
