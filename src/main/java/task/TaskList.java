@@ -160,7 +160,7 @@ public class TaskList {
     public String find(String needle) {
         List<String> taskList = tasks.stream()
                 .map(Task::toString)
-                .filter(x -> x.contains(needle) || match_expression(x, needle))
+                .filter(x -> x.contains(needle) || matchExpression(x, needle) || matchForEach(x, needle))
                 .toList();
 
         if (taskList.isEmpty()) {
@@ -174,7 +174,16 @@ public class TaskList {
         return (builder.toString());
     }
 
-    private boolean match_expression(String string, String pattern) {
+    private boolean matchForEach(String string, String pattern) {
+        String[] splitString = string.split(" ");
+        for (String s : splitString) {
+            if (matchExpression(s, pattern)) {
+                return (true);
+            }
+        }
+        return (false);
+    }
+    private boolean matchExpression(String string, String pattern) {
         int matchIndex = 0;
         int prevStar = -1;
         int patternIndex = 0;
@@ -211,9 +220,5 @@ public class TaskList {
         IntStream.range(0, tasks.size())
                 .forEach(x -> builder.append(x + 1).append(".").append(tasks.get(x).toString()).append("\n"));
         return (builder.toString());
-    }
-
-    public static void main(String[] args) {
-        System.out.println(new TaskList(null).match_expression("[T][X] play league of legends", "[*"));
     }
 }
