@@ -40,7 +40,7 @@ public class TaskListTest {
     void testDeleteTaskInvalidIndex() {
         String[] input = {"4"};
         String result = taskList.delete(input);
-        assertEquals("Please pick within the range 1 - 3\n", result);
+        assertEquals("4 is invalid, please pick within the range 1 - 3\n", result);
     }
 
     @Test
