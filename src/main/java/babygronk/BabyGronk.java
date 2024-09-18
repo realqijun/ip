@@ -37,8 +37,8 @@ public class BabyGronk {
     }
 
     private String handleInput(String input) {
+        commandType = ""; // Set to default for default response color in GUI
         assert input != null;
-        commandType = "";
         Parser parser = new Parser();
         Instruction instruction;
         try {

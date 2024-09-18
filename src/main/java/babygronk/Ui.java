@@ -37,13 +37,13 @@ public class Ui {
 
     protected static String sayHi() {
         return ("""
-                Hello
+                Hello there, have you been practising your mewing?
                 """);
     }
 
     protected static String sayBye() {
         return ("""
-                Bye
+                Smell you later
                 """);
     }
 

@@ -31,8 +31,8 @@ public class Parser {
         if (input.startsWith("hello") || input.startsWith("hi")) {
             return (new Instruction("hi", args));
         }
-        if (input.startsWith("bye")) {
-            return (new Instruction(args[0], args));
+        if (input.startsWith("bye") || input.startsWith("exit")) {
+            return (new Instruction("bye", args));
         }
         if (Instruction.isListCommand(args[0])) {
             return (new Instruction(args[0], args));
