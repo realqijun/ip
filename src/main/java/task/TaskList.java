@@ -174,31 +174,31 @@ public class TaskList {
         return (builder.toString());
     }
 
-    private boolean match_expression(String str, String expr) {
-        int match_i = 0;
-        int prev_star = -1;
-        int expr_i = 0;
-        int str_i = 0;
-        while (str_i < str.length()) {
-            if (expr_i != expr.length() && expr.charAt(expr_i) == '*') {
-                match_i = str_i;
-                prev_star = expr_i;
-                expr_i++;
-            } else if (expr_i != expr.length() && str.charAt(str_i) == expr.charAt(expr_i)) {
-                expr_i++;
-                str_i++;
-            } else if (prev_star != -1) {
-                match_i++;
-                str_i = match_i;
-                expr_i = prev_star + 1;
+    private boolean match_expression(String string, String pattern) {
+        int matchIndex = 0;
+        int prevStar = -1;
+        int patternIndex = 0;
+        int stringIndex = 0;
+        while (stringIndex < string.length()) {
+            if (patternIndex != pattern.length() && pattern.charAt(patternIndex) == '*') {
+                matchIndex = stringIndex;
+                prevStar = patternIndex;
+                patternIndex++;
+            } else if (patternIndex != pattern.length() && string.charAt(stringIndex) == pattern.charAt(patternIndex)) {
+                patternIndex++;
+                stringIndex++;
+            } else if (prevStar != -1) {
+                matchIndex++;
+                stringIndex = matchIndex;
+                patternIndex = prevStar + 1;
             } else {
                 return false;
             }
         }
-        while (expr_i != expr.length() && expr.charAt(expr_i) == '*') {
-            expr_i++;
+        while (patternIndex != pattern.length() && pattern.charAt(patternIndex) == '*') {
+            patternIndex++;
         }
-        return (expr_i == expr.length());
+        return (patternIndex == pattern.length());
     }
 
     public Stream<Task> getTasks() {

@@ -1,8 +1,5 @@
-import java.io.IOException;
-
 import babygronk.BabyGronk;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -31,21 +28,11 @@ public class MainWindow extends AnchorPane {
     private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/babygronk.jpg"));
 
     /**
-     * What am I doing.
+     * Handles all initialization in the GUI part of the program.
      */
-    public MainWindow() {
-        try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
-            loader.setController(this);
-            loader.setRoot(this);
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @FXML
     public void initialize() {
+        textField.setPromptText("Input here please");
         scrollPane.vvalueProperty().bind(vBox.heightProperty());
     }
 
@@ -61,9 +48,10 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = textField.getText();
         String response = babyGronk.getResponse(input);
+        String commandType = babyGronk.getCommandType();
         vBox.getChildren().addAll(
                 DialogBox.getClientDialog(input, userImage),
-                DialogBox.getServerDialog(response, dukeImage)
+                DialogBox.getServerDialog(response, dukeImage, commandType)
         );
         textField.clear();
     }

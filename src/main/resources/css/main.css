@@ -2,6 +2,8 @@
     main-color: #07192b;       /* Create a looked-up color called "main-color" within root. */
     -fx-background-color: main-color;
     sub-color: #548b94;
+    -fx-background-image: url("../images/kaincenate.jpeg");
+    -fx-background-size: stretch;
 }
 
 .text-field {
@@ -28,6 +30,10 @@
 .scroll-pane,
 .scroll-pane .viewport {
     -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: rgba(0,0,0,.5);
 }
 
 .scroll-bar {

@@ -1,6 +1,10 @@
+import java.io.IOException;
+
 import babygronk.BabyGronk;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -12,13 +16,18 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setMinHeight(220);
-        primaryStage.setMinWidth(417);
-        MainWindow mainWindow = new MainWindow();
-        Scene scene = new Scene(mainWindow);
-        primaryStage.setScene(scene);
-        mainWindow.setBabyGronk(babyGronk);
-        primaryStage.setTitle("BabyGronk");
-        primaryStage.show();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
+            AnchorPane mainWindow = fxmlLoader.load();
+            Scene scene = new Scene(mainWindow);
+            primaryStage.setTitle("BabyGronk");
+            primaryStage.setMinHeight(220);
+            primaryStage.setMinWidth(417);
+            primaryStage.setScene(scene);
+            fxmlLoader.<MainWindow>getController().setBabyGronk(babyGronk);
+            primaryStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
