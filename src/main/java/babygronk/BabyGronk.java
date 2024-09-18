@@ -22,6 +22,7 @@ public class BabyGronk {
     private final Ui ui;
 
     private final TaskList taskList;
+    private String commandType;
 
     /**
      * Constructor for babyGronk, takes a String as input.
@@ -37,6 +38,7 @@ public class BabyGronk {
 
     private String handleInput(String input) {
         assert input != null;
+        commandType = "";
         Parser parser = new Parser();
         Instruction instruction;
         try {
@@ -56,18 +58,22 @@ public class BabyGronk {
             return (taskList.toString());
         }
         if (command.equals("mark") || command.equals("m")) {
+            commandType = "ChangeMarkCommand";
             return (taskList.markTask(instruction.getArgs(), true));
         }
         if (command.equals("unmark") || command.equals("um")) {
+            commandType = "ChangeMarkCommand";
             return (taskList.markTask(instruction.getArgs(), false));
         }
         if (Instruction.isDeleteCommand(command)) {
+            commandType = "DeleteCommand";
             return (taskList.delete(instruction.getArgs()));
         }
         if (Instruction.isFindCommand(command)) {
             return (taskList.find(instruction.getArgs()[0]));
         }
         if (Instruction.isTaskCommand(command)) {
+            commandType = "AddCommand";
             return (addTask(instruction));
         }
         return ("Error occurred, program shouldn't reach here");
@@ -116,6 +122,10 @@ public class BabyGronk {
         } catch (EmptyInputException e) {
             return (e.getMessage());
         }
+    }
+
+    public String getCommandType() {
+        return (commandType);
     }
 
     public static void main(String[] args) {

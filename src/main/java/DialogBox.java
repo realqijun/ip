@@ -56,10 +56,27 @@ public class DialogBox extends HBox {
         return new DialogBox(s, i);
     }
 
-    public static DialogBox getServerDialog(String s, Image i) {
+    public static DialogBox getServerDialog(String s, Image i, String commandType) {
         var db = new DialogBox(s, i);
         db.flip();
+        db.changeDialogStyle(commandType);
         return db;
+    }
+
+    private void changeDialogStyle(String commandType) {
+        switch(commandType) {
+        case "AddCommand":
+            text.getStyleClass().add("add-label");
+            break;
+        case "ChangeMarkCommand":
+            text.getStyleClass().add("marked-label");
+            break;
+        case "DeleteCommand":
+            text.getStyleClass().add("delete-label");
+            break;
+        default:
+            // Do nothing
+        }
     }
 }
 

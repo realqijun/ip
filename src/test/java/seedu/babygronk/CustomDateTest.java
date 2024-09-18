@@ -26,4 +26,17 @@ public class CustomDateTest {
                         + " " + LocalTime.now().format(DateTimeFormatter.ofPattern("HHmm")));
     }
 
+    @Test
+    public void testValidDateWithDashFormat() {
+        CustomDate customDate = new CustomDate("31-12-2025 0000");
+        assertEquals("31/12/2025 0000", customDate.unparseDate());
+    }
+
+    @Test
+    public void testToStringFormat() {
+        CustomDate customDate = new CustomDate("11/09/2000 1500");
+        String expected = "11th of September 2000 at 03:00 PM";
+        assertEquals(expected, customDate.toString());
+    }
+
 }

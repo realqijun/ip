@@ -27,8 +27,12 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/user.jpg"));
     private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/babygronk.jpg"));
 
+    /**
+     * Handles all initialization in the GUI part of the program.
+     */
     @FXML
     public void initialize() {
+        textField.setPromptText("Input here please");
         scrollPane.vvalueProperty().bind(vBox.heightProperty());
     }
 
@@ -44,9 +48,10 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = textField.getText();
         String response = babyGronk.getResponse(input);
+        String commandType = babyGronk.getCommandType();
         vBox.getChildren().addAll(
                 DialogBox.getClientDialog(input, userImage),
-                DialogBox.getServerDialog(response, dukeImage)
+                DialogBox.getServerDialog(response, dukeImage, commandType)
         );
         textField.clear();
     }
