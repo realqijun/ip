@@ -1,7 +1,10 @@
 package task;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -92,19 +95,23 @@ public class TaskList {
      * @return Status of deletion.
      */
     public String delete(String[] input) {
+        List<Integer> deleteIndices = Arrays.stream(input)
+                .map(Integer::parseInt)
+                .sorted(Collections.reverseOrder())
+                .toList();
+
         StringBuilder builder = new StringBuilder();
-        for (String s : input) {
-            int toDelete = Integer.parseInt(s);
+        for (Integer toDelete : deleteIndices) {
             if (toDelete < 1 || toDelete > tasks.size()) {
                 if (tasks.isEmpty()) {
                     return ("Ohio level brainrot detected, you haven't even added anything to the list\n");
                 } else {
-                    return ("Please pick within the range 1 - " + tasks.size() + "\n");
+                    return (toDelete + " is invalid, please pick within the range 1 - " + tasks.size() + "\n");
                 }
             }
             Task deleted = tasks.remove(toDelete - 1);
             builder.append(deleted).append("\n has been ejected (they were the impostor)\n")
-                    .append(tasks.size()).append(" tasks remain\n");
+                    .append(tasks.size()).append(" tasks remain\n\n");
         }
         return (builder.toString());
     }
