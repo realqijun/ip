@@ -36,6 +36,18 @@ public class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(vBox.heightProperty());
     }
 
+    /**
+     * Creates a DialogBox to greet the user.
+     */
+    public void sayHi() {
+        vBox.getChildren().add(
+                DialogBox.getServerDialog(
+                        babyGronk.getResponse("hi"),
+                        dukeImage,
+                        babyGronk.getCommandType())
+        );
+    }
+
     public void setBabyGronk(BabyGronk bg) {
         babyGronk = bg;
     }

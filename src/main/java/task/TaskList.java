@@ -164,10 +164,13 @@ public class TaskList {
      * @return If found, the description of every task that matches, else, "No Matches".
      */
     public String find(String needle) {
-        List<String> taskList = tasks.stream()
-                .map(Task::toString)
-                .filter(x -> x.contains(needle) || matchExpression(x, needle) || matchForEach(x, needle))
-                .toList();
+        List<String> taskList;
+
+        if (isTaskTypeSearch(needle)) {
+            taskList = getTaskTypeMatches(needle.toLowerCase());
+        } else {
+            taskList = getDefaultMatches(needle);
+        }
 
         if (taskList.isEmpty()) {
             return ("No matches to " + needle + " found\n");
@@ -180,6 +183,34 @@ public class TaskList {
         return (builder.toString());
     }
 
+    private boolean isTaskTypeSearch(String needle) {
+        String lowerCaseNeedle = needle.toLowerCase();
+        return (lowerCaseNeedle.equals("todo")
+                || lowerCaseNeedle.equals("deadline")
+                || lowerCaseNeedle.equals("event"));
+    }
+
+    private List<String> getTaskTypeMatches(String type) {
+        switch (type) {
+        case "todo":
+            return (tasks.stream().filter(x -> x instanceof ToDo).map(Task::toString).toList());
+        case "deadline":
+            return (tasks.stream().filter(x -> x instanceof Deadline).map(Task::toString).toList());
+        case "event":
+            return (tasks.stream().filter(x -> x instanceof Event).map(Task::toString).toList());
+        default:
+            return (Collections.emptyList());
+        }
+
+    }
+
+    private List<String> getDefaultMatches(String needle) {
+        return (tasks.stream()
+                .map(Task::toString)
+                .filter(x -> x.contains(needle) || matchExpression(x, needle) || matchForEach(x, needle))
+                .toList());
+    }
+
     private boolean matchForEach(String string, String pattern) {
         String[] splitString = string.split(" ");
         for (String s : splitString) {
@@ -189,6 +220,7 @@ public class TaskList {
         }
         return (false);
     }
+
     private boolean matchExpression(String string, String pattern) {
         int matchIndex = 0;
         int prevStar = -1;
