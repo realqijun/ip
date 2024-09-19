@@ -1,14 +1,24 @@
-# Duke User Guide
+# BabyGronk User Guide
 
-// Update the title above to match the actual product name
+![Product screenshot](Ui.png)
 
-// Product screenshot goes here
+This is BabyGronk, your skibidi task manager
 
-// Product intro goes here
+## Adding tasks
+There are 3 types of tasks you may add:
+1. ToDo
+2. Deadline
+3. Event
 
-## Adding deadlines
+## ToDo
+Usage: `todo [taskName]`
 
-// Describe the action and its outcome.
+## Deadline
+Usage: `deadline [taskName] /by [date]`
+
+## Event
+Usage: `event [taskName] /from [date] /to [date]`
+
 
 // Give examples of usage
 
