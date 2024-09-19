@@ -25,6 +25,7 @@ public class Main extends Application {
             primaryStage.setMinWidth(417);
             primaryStage.setScene(scene);
             fxmlLoader.<MainWindow>getController().setBabyGronk(babyGronk);
+            fxmlLoader.<MainWindow>getController().sayHi();
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();

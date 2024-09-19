@@ -15,7 +15,7 @@ public class Ui {
                 Going back to my skibidi toilet.
                 """
                 + SEPARATOR;
-        System.out.println(goodByeMessage);
+        //System.out.println(goodByeMessage);
         System.exit(0);
     }
 

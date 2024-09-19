@@ -102,9 +102,4 @@ public class Parser {
         String[] eventRet = new String[] {eventArgs[0], eventDetails[0], eventDetails[1], eventDetails[2]};
         return (new Instruction("event", eventRet));
     }
-
-    public static void main(String[] args) throws InvalidInputException {
-        Parser parser = new Parser();
-        parser.parseInstruction("deadline . /by fe");
-    }
 }
