@@ -1,6 +1,6 @@
 # BabyGronk User Guide
 
-BabyGronk is a **chatbot task manager** with a GUI. Designed with simplified commands and a Gen-Z personality, 
+BabyGronk😎 is a **chatbot task manager** with a GUI. Designed with simplified commands and a Gen-Z personality, 
 this chatbot supports the creation, deletion, update and finding of tasks.
 
 - [Quick Start](#quick-start)
@@ -16,18 +16,22 @@ this chatbot supports the creation, deletion, update and finding of tasks.
 
 ![Product screenshot](Ui.png)
 
-  ## Quick Start 
-1. Download the jar file [here]()
+## Quick Start
+1. Ensure that you have Java 17 or above installed on your device.
+2. Download the jar file [here]()
+3. Run the jar file straight away, or from the terminal by typing:
+```angular2html
+java -jar babygronk.jar
+```
 
-  ## Features
-Notes: 
-- Commands are not case-sensitive
-- `...` means there can be more arguments
-- Some commands have abbreviations or alternatives , they will be described with the format `[command]/[abbr]/...`
+## Features
+> [!NOTE] 
+> - Commands are not case-sensitive ❗️
+> - `...` means there can be more arguments
+> - Some commands have abbreviations or alternatives , they will be described with the format `[command]/[abbr]/...`
 
 
-  ## Adding tasks
-
+## Adding tasks
 There are 3 types of tasks you may add:
 1. [ToDo]()
 2. [Deadline]()
@@ -63,7 +67,7 @@ dd-mm-yyyy hhmm
 ```
 here `hhmm` are in military time format.
 
-  ## Deleting
+## Deleting
 Deletes tasks from the list. Supports deleting more than 1 task at once\
 Usage: `delete/del/d [index]...`
 ```
@@ -72,11 +76,11 @@ Usage: `delete/del/d [index]...`
 [number] tasks remain.
 ```
 
- ## List
+## List
 Lists current tasks. \
 Usage: `list/l`
 
- ## Find
+## Find
 Finds tasks with matching keyword. Supports wildcards, just use asterisk`*`. \
 Usage: `find/f [keyword]` \
 
@@ -87,17 +91,19 @@ Examples:
 - `find deadline`
 - `f *09/2024`
 
- ## Mark
+## Mark
 Mark multiple tasks as done.
 Usage: `mark/m [index]...`
 
- ## Unmark
+## Unmark
 Unmarks multiple tasks.
 Usage: `unmark/um [index]...`
 
- ## Greeting Options
+## Greeting Options
 BabyGronk says hi to you! Just say `hi/hello` to him first!
 
- ## Exiting
+## Exiting
 When you're finally done with managing your tasks, simply say `bye/exit` and the program closes.
 Tasks will be saved into a file in the directory `[root]/data`
+
+## Summary
