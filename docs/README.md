@@ -3,25 +3,26 @@
 BabyGronk is a **chatbot task manager** with a GUI. Designed with simplified commands and a Gen-Z personality, 
 this chatbot supports the creation, deletion, update and finding of tasks.
 
-- [Quick Start]()
-- [Features]()
-   - [Creating a task]()
-   - [Deleting tasks]()
-   - [List all tasks]()
-   - [Find tasks]()
-   - [Mark task]()
-   - [Unmark task]()
-   - [Greeting options]()
-   - [Exiting]()
+- [Quick Start](#quick-start)
+- [Features](#features)
+   - [Creating a task](#adding-tasks)
+   - [Deleting tasks](#deleting)
+   - [List all tasks](#list)
+   - [Find tasks](#find)
+   - [Mark task](#mark)
+   - [Unmark task](#unmark)
+   - [Greeting options](#greeting-options)
+   - [Exiting](#exiting)
 
 ![Product screenshot](Ui.png)
 
   ## Quick Start 
+1. Download the jar file [here]()
 
   ## Features
 Notes: 
 - Commands are not case-sensitive
-- `...` means there can be more
+- `...` means there can be more arguments
 - Some commands have abbreviations or alternatives , they will be described with the format `[command]/[abbr]/...`
 
 
