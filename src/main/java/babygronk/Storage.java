@@ -15,26 +15,39 @@ import task.Task;
  * Creates file and reads and stores data in it.
  */
 public class Storage {
+    private static final String DEFAULT_STORAGE_NAME = "./data/BabyGronk.txt";
     private final String fileName;
 
+    /**
+     * Constructor for Storage class. Assigns default storage file if input is null or empty.
+     * @param file
+     */
     public Storage(String file) {
-        fileName = file;
+        if (file == null || file.isEmpty()) {
+            fileName = DEFAULT_STORAGE_NAME;
+        } else {
+            fileName = file;
+        }
     }
 
     private boolean fileCreated() {
         File dataFile = new File(fileName);
-        if (!dataFile.exists()) {
-            boolean directoryCreated = dataFile.getParentFile().mkdirs();
+        File parentDir = dataFile.getParentFile();
+        if (parentDir != null && !parentDir.exists()) {
+            boolean directoryCreated = parentDir.mkdirs();
             if (!directoryCreated) {
-                System.out.println("Directory was not created");
+                System.out.println("Failed to create directory: " + parentDir);
                 return (false);
             }
-            boolean isCreated = false;
+        }
+
+        if (!dataFile.exists()) {
+            boolean isCreated;
             try {
                 isCreated = dataFile.createNewFile();
             } catch (IOException e) {
-                System.out.println("Error creating file");
-                System.exit(1);
+                System.out.println("Error creating new file");
+                return (false);
             }
             if (!isCreated) {
                 System.out.println("File was not created");
@@ -88,5 +101,7 @@ public class Storage {
                 System.out.println("Error writing to file");
             }
         }
+
+        System.out.println("Data was not saved to file");
     }
 }

@@ -16,7 +16,7 @@ public class Parser {
         if (input == null || input.isEmpty()) {
             throw new EmptyInputException("What bro? You're too fanum taxed\n");
         }
-        return (String.join(" ", input.strip().split("\\s+")));
+        return (String.join(" ", input.strip().split("\\s+"))); // Removes whitespaces in between words.
     }
 
     /**

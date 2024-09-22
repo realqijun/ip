@@ -37,22 +37,25 @@ public class BabyGronk {
     }
 
     private String handleInput(String input) {
-        commandType = ""; // Set to default for default response color in GUI
-        assert input != null;
+        commandType = ""; // Set to default for default response color in GUI.
+        assert input != null; // Passed from Parser, empty input should have thrown errors.
         Parser parser = new Parser();
         Instruction instruction;
+
         try {
             instruction = parser.parseInstruction(input);
         } catch (InvalidInputException e) {
             return (e.getMessage());
         }
+
         String command = instruction.getInstruction();
-        if (instruction.getInstruction().equals("hi")) {
+
+        if (command.equals("hi")) {
             return (Ui.sayHi());
         }
-        if (instruction.getInstruction().equals("bye")) {
+        if (command.equals("bye")) {
             storage.saveData(taskList.getTasks());
-            ui.logOff();
+            ui.logOff(); // Exits program.
         }
         if (Instruction.isListCommand(command)) {
             return (taskList.toString());
@@ -76,7 +79,7 @@ public class BabyGronk {
             commandType = "AddCommand";
             return (addTask(instruction));
         }
-        return ("Error occurred, program shouldn't reach here");
+        return ("Error occurred, program shouldn't reach here\n"); // parseInstruction should've handled this
     }
 
     private String addTask(Instruction instruction) {
@@ -90,7 +93,7 @@ public class BabyGronk {
         case "event":
             return (taskList.add(new Event(args[0], args[1], args[2])));
         default:
-            return ("Invalid task: " + task + " (parser failed probably)");
+            return ("Invalid task: " + task + " (parser failed probably)\n");
         }
     }
 
@@ -104,8 +107,8 @@ public class BabyGronk {
         while (true) {
             if (scanner.hasNextLine()) {
                 try {
-                    String input = Parser.parseInput(scanner.nextLine());
-                    ui.printMessage(handleInput(input));
+                    String parsedInput = Parser.parseInput(scanner.nextLine());
+                    ui.printMessage(handleInput(parsedInput));
                 } catch (EmptyInputException e) {
                     ui.printMessage(e.getMessage());
                 }
@@ -116,19 +119,31 @@ public class BabyGronk {
         }
     }
 
+    /**
+     * Public method for GUI responses.
+     *
+     * @param input Input String.
+     * @return Response to given string.
+     */
     public String getResponse(String input) {
         try {
-            return (handleInput(Parser.parseInput(input)));
+            String parsedInput = Parser.parseInput(input);
+            return (handleInput(parsedInput));
         } catch (EmptyInputException e) {
             return (e.getMessage());
         }
     }
 
+    /**
+     * Public method for GUI DialogBox colors.
+     *
+     * @return CommandType as a string.
+     */
     public String getCommandType() {
         return (commandType);
     }
 
     public static void main(String[] args) {
-        new BabyGronk("./data/BabyGronk.txt").run();
+        new BabyGronk("./data/BabyGronk.txt").run(); // CLI part of program, reads from stdin.
     }
 }

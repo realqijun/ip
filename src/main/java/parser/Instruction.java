@@ -6,8 +6,8 @@ import java.util.Arrays;
  * Contains a String instruction and String[] args where the first element in args is instruction.
  */
 public class Instruction {
-    private String instruction;
-    private String[] args;
+    private final String instruction;
+    private final String[] args;
 
     Instruction(String instruction, String[] args) {
         this.instruction = instruction;
@@ -16,6 +16,15 @@ public class Instruction {
 
     public String getInstruction() {
         return (instruction);
+    }
+
+    /**
+     * For debug purposes.
+     *
+     * @return The full command including first word.
+     */
+    protected String[] getFullArgs() {
+        return (args);
     }
 
     /**

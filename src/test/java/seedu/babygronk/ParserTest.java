@@ -15,14 +15,14 @@ import parser.Parser;
 public class ParserTest {
 
     @Test
-    public void parseInput() throws EmptyInputException {
+    public void testParseInput() throws EmptyInputException {
         String input = "  hello   world ";
         String expected = "hello world";
         assertEquals(expected, Parser.parseInput(input));
     }
 
     @Test
-    public void parseEmptyInput() throws EmptyInputException {
+    public void testParseEmptyInput() throws EmptyInputException {
         Exception exception = assertThrows(EmptyInputException.class, () -> {
             Parser.parseInput("");
         });
@@ -30,7 +30,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parseNull() throws EmptyInputException {
+    public void testParseNull() throws EmptyInputException {
         Exception exception = assertThrows(EmptyInputException.class, () -> {
             Parser.parseInput(null);
         });
@@ -38,7 +38,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parseTodo() throws InvalidInputException {
+    public void testParseTodo() throws InvalidInputException {
         Instruction instruction = new Parser().parseInstruction("todo read a book");
         assertEquals("todo", instruction.getInstruction());
         assertArrayEquals(new String[] {"read a book"}, instruction.getArgs());

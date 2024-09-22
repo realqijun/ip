@@ -27,6 +27,12 @@ public class TaskList {
         }
     }
 
+    /**
+     * Converts string into task.
+     *
+     * @param input Task in toStorageFormat format.
+     * @return A task.
+     */
     private Task initTasks(String input) {
         String[] args = input.split("] ");
         if (args.length != 2) {
@@ -88,7 +94,7 @@ public class TaskList {
     }
 
     /**
-     * Deletes tasks given in input.
+     * Deletes tasks given in input. Sorts them in descending order and deletes tasks one by one.
      *
      * @param input Array of strings, each string representing a task.
      * @return Status of deletion.
@@ -107,7 +113,7 @@ public class TaskList {
                 } else {
                     return (toDelete + " is invalid, please pick within the range 1 - " + tasks.size() + "\n");
                 }
-            }
+            } // Stops deleting once the first invalid index is found.
             Task deleted = tasks.remove(toDelete - 1);
             builder.append(deleted).append("\n has been ejected (they were the impostor)\n")
                     .append(tasks.size()).append(" tasks remain\n");

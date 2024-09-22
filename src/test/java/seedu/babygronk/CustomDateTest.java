@@ -13,14 +13,14 @@ import babygronk.CustomDate;
 public class CustomDateTest {
 
     @Test
-    public void noDate() {
+    public void testNoDate() {
         assertEquals(new CustomDate(null).unparseDate(),
                 LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
                         + " " + LocalTime.now().format(DateTimeFormatter.ofPattern("HHmm")));
     }
 
     @Test
-    public void invalidDate() {
+    public void testInvalidDate() {
         assertEquals(new CustomDate("212/213/213 21321").unparseDate(),
                 LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
                         + " " + LocalTime.now().format(DateTimeFormatter.ofPattern("HHmm")));

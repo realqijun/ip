@@ -14,7 +14,7 @@ public class CustomDate {
     private LocalTime localTime;
 
     /**
-     * CustomDate constructor method.
+     * CustomDate constructor method. Sets the date to current date if date is invalid.
      *
      * @param date Date string of format dd/mm/yyyy hhmm or dd-mm-yyyy hhmm.
      */
