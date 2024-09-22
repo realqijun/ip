@@ -20,7 +20,8 @@ public class Storage {
 
     /**
      * Constructor for Storage class. Assigns default storage file if input is null or empty.
-     * @param file
+     *
+     * @param file File to be used as Storage.
      */
     public Storage(String file) {
         if (file == null || file.isEmpty()) {
